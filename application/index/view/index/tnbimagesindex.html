@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TNB REPORT</title>
+  <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+  <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/tnbindex.css">
+  <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+</head>
+<style>
+  .layui-form-checkbox i{
+      height: 30px!important;
+  }
+
+  .layui-unselect layui-form-select
+  {
+      line-height: 20px;
+  }
+  .tac{
+
+  }
+  .attach1{
+      float: none!important;
+      margin-right: 0!important;
+  }
+  .bk1{
+
+  }
+  @media screen and (max-width: 662px) {
+
+      .attach1{
+          display: none!important;
+      }
+      .layui-col-md3::before{
+          content: '分辨率太低啦！，请换设备';
+      }
+
+  }
+  @media screen and (max-width: 1240px) {
+
+      .attach1{
+          float: left!important;
+      }
+      .layui-input-inline{
+          width: auto!important;
+      }
+
+  }
+
+  @media screen and (min-width: 1250px) {
+
+      .attach1{
+          float: left!important;
+      }
+      .bk1{
+          display: none!important;
+      }
+  }
+
+</style>
+<!-- TNB REPORT -->
+
+<body>
+  <ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<blockquote class="layui-elem-quote layui-quote-nm" style="text-align: center">TNB REPORT</blockquote>
+<div style="width: 800px;margin: 0 auto;">
+  <div style="width:90%;margin: 0 auto;">
+    <form class="layui-form" action="">
+    <div class="layui-input-inline" style="margin-left: 40px;"   >
+      <!--class="layui-input-inline"允许多个表单控件占一行，横着，一行可以放置多个表单元素-->
+      <select id="test" onchange="change()" lay-filter='test' name='test' lay-search=""  >
+        <option>MODEL</option>
+      </select>
+    </div>
+    <div class="layui-input-inline" style="margin-left: 66px;"   >
+      <!--class="layui-input-inline"允许多个表单控件占一行，横着，一行可以放置多个表单元素-->
+      <select id="test1" onchange="change()"  name='test1'>
+        <option>PN</option>
+      </select>
+    </div>
+    <div class="layui-input-inline" style="margin-left: 66px;"   >
+      <!--class="layui-input-inline"允许多个表单控件占一行，横着，一行可以放置多个表单元素-->
+      <div class="layui-btn-group" style="" >
+        <button  class="layui-btn" lay-submit lay-filter="search"   style="" >确定</button>
+    </div>
+    </div>      
+    
+</form></div>
+
+</div>
+  <iframe id='mainFrame1' src="" frameborder="0"></iframe>
+</body>
+<script>
+   layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+        //…
+    });
+    layui.use('form',function () {
+      let form = layui.form;
+      jQuery(document).ready(function () {
+            $.ajax({
+                url:'{:url("itform/tnb_report")}',
+                data: { data: 'model' },
+                dataType: 'json',
+                type:'post',
+                success:function (msg) {
+                    console.log(msg);
+                    
+                    for(let j=0;j<msg.length;j++){
+
+                        $('#test').append(new Option(msg[j]['MODEL'],msg[j]['MODEL']));
+
+                    }
+                    form.render('select');
+
+
+                }
+
+
+            })
+
+        });
+        form.on('select(test)',function(data){
+          let model = data.value;
+          $.ajax({
+                url:'{:url("itform/tnb_report")}',
+                data: { data: 'pn', model: model },
+                dataType: 'json',
+                type:'post',
+                success:function (msg) {
+                  var selections = document.getElementById('test1');
+                selections.length = 0;
+                console.log(msg);
+                var selections = document.getElementById('test1');
+                for (var i = 0; i < msg.length; i++) {
+                  var option = document.createElement("option");
+                  if(i==0){
+                    //console.log( msg[0]);
+                    option.value = msg[0];
+                    option.text = msg[0];
+                    selections.options.add(option);
+                  }
+                  else{
+                    option.value = msg[i]['PN'];
+                    option.text = msg[i]['PN'];
+                    selections.options.add(option);
+                  }
+         
+         
+               }
+               form.render('select');
+
+              }
+
+
+            })
+          //console.log(data);
+        });
+
+        //button click
+        form.on('submit(search)',function (data) {
+             console.log(data.field);
+             let dat  =data.field; 
+             let model = dat['test'];
+             let pn = dat['test1'];
+             
+             var frame = document.getElementById('mainFrame1');
+              if (pn == 'PN') {
+              frame.src = "../../../pyhtml/" + model + ".html";
+              } else {
+                frame.src = "../../../pyhtml/" + model + pn + ".html";
+              }
+             
+            $.ajax({
+               url:'{:url("itform/execpy")}',
+               type:'post',
+               dataType:'json',
+               data:{},
+                success:function (msg) {
+                    console.log(msg);
+                    if(msg==1){
+                     console.log('success');
+                     return false;
+                  }
+                  
+                    
+
+                },
+                error:function (msg) {
+                    console.log(msg);
+                }
+            });
+            
+            return false;
+        });
+
+    })
+
+
+  // function sure() {
+  //   var model = $('#test').val();
+  //   var pn = $('#test1').val();
+  //   var frame = document.getElementById('mainFrame1');
+  //     if (pn == 'PN') {
+  //     frame.src = "../../../pyhtml/" + model + ".html";
+  //     } else {
+  //       frame.src = "../../../pyhtml/" + model + pn + ".html";
+  //     }
+  //   $.ajax({
+  //     type: 'post',
+  //     url: '{:url("itform/execpy")}',
+  //     data: {},
+  //     dataType: 'json',
+  //     success: function (msg) {
+  //      if(msg==1){
+  //       console.log('success');
+  //      }
+
+  //     },
+  //     error: function (msg) {
+  //       console.log(msg);
+  //     }
+  //   })
+  // }
+
+</script>
+
+</html>

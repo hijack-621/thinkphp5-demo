@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+
+</head>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="/login">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+
+<div class="container" style="margin-top: 100px;text-align: center;">
+    <div style="margin-top: -50px">
+        <div class="row" id="row0" style="text-align: center;margin-left: auto;margin-right: auto">
+
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle">
+                <a href="javascript:void(0)" id="a1" onclick="stcheck()" >
+                    <i class="layui-icon layui-icon-website" style="font-size: 100px"></i>
+                    <p>SOFTWARE</p>
+                </a>
+            </div>
+
+
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle">
+                <a href="javascript:void(0)" onclick="tnbcheck()">
+                <i class="layui-icon layui-icon-windows" style="font-size: 100px"></i>
+                <p>TNB</p>
+                </a>
+            </div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle">
+                <a  href="javascript:void(0)" onclick="eform()">
+                <i class="layui-icon layui-icon-list" style="font-size: 100px"></i>
+                <p>E-Form</p>
+                </a>
+        </div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle">
+                 <a href="javascript:void(0)"  onclick="ep()">
+                <i class="layui-icon layui-icon-util" style="font-size: 100px"></i>
+                <p>Equipment</p>
+                </a>
+        </div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading-1" style="font-size: 100px"></i>
+                <p>Coming soon</p>
+            </a></div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading-1" style="font-size: 100px"></i>
+                <p>Coming soon</p>
+            </a></div>
+        </div>
+
+        <div class="row" style="margin-top: 5px;text-align: center;margin-left: auto;margin-right: auto" id="row2">
+            <div class="col-md-4">
+                <a href="#" style="background-color: orange">
+                    <!--<i class="layui-icon layui-icon-login-qq" style="font-size: 100px"></i>-->
+                    <!--<p>新增表单</p>-->
+                </a>
+                <div  id="a2">
+                    <div class="row" id="row3">
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-praise" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-tread" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a href="#" style="background-color: orange">
+                    <!--<i class="layui-icon layui-icon-login-qq" style="font-size: 100px"></i>-->
+                    <!--<p>新增表单</p>-->
+                </a>
+                <div  id="a2">
+                    <div class="row" id="row3">
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-praise" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-tread" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4" style="background-color: purple;position: relative" id="d3">
+                <div class="d">
+                    <div class="d4">
+                        <!--<i class="layui-icon layui-icon-windows" style="font-size: 100px" ></i>-->
+                    </div>
+                    <div class="d6">
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+
+        //…
+    });
+    function stcheck() {
+        window.open('{:url("index/index")}');
+        // layui.use('layer',function () { //使用控件必须use一下
+        //     layer.ready(function () {
+        //         layer.open({
+        //             type:2,
+        //             title:'访问确认',
+        //             maxmin:true,//最大最小话
+        //             shadeClose:true,//是否点击遮罩关闭
+        //             area:['550px','160px'],//弹出层大小
+        //             content:'{:url("index/vicepagelayer")}',
+        //             btn: ['确定','关闭'],
+        //             yes:function (index) {
+        //                 let password = window["layui-layer-iframe" + index].callbackdata();
+        //                 let layer = layui.layer;
+        //                 //console.log(password);
+        //                 if(password =='sod'){
+
+        //                     layer.msg('验证通过，正在跳转',function () {
+        //                         layer.close(index);
+        //                         window.open('{:url("index/index")}');
+
+        //                     });
+        //                 }else{
+        //                     layer.msg('密码不对，验证失败',function () {
+        //                         return '';
+        //                     });
+        //                 }
+        //             }
+
+        //         });
+        //     });
+
+
+        // });
+
+    }
+    function tnbcheck() {
+        window.open('{:url("index/tindex")}');
+        // layui.use('layer',function () {//使用控件必须use一下
+        //     layer.ready(function () {
+        //         layer.open({
+        //             type:2,
+        //             title:'访问确认',
+        //             maxmin:true,//最大最小话
+        //             shadeClose:true,//是否点击遮罩关闭
+        //             area:['550px','160px'],//弹出层大小
+        //             content:'{:url("index/vicepagelayer")}',
+        //             btn: ['确定','关闭'],
+        //             yes:function (index) {
+        //                 let password = window["layui-layer-iframe" + index].callbackdata();
+        //                 let layer = layui.layer;
+        //                 //console.log(password);
+        //                 if(password =='sod'){
+
+        //                     layer.msg('验证通过，正在跳转',function () {
+        //                         layer.close(index);
+        //                         window.open('{:url("index/tindex")}');
+        //                     });
+        //                 }else{
+        //                     layer.msg('密码不对，验证失败',function () {
+        //                         return '';
+        //                     });
+        //                 }
+        //             }
+
+        //         });
+        //     });
+
+        // });
+    }
+    function eform() {
+        window.open('{:url("Eform/eform")}');
+    }
+    function ep(){
+        window.open('{:url("Equipment/epindex")}');
+    }
+</script>
+</html>

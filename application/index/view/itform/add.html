@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addForm</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <style type="text/css">
+        label{
+            padding: 0;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('index/signinfo')}">进行中<span class="layui-badge">{$pend}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('index/endsigninfo')}">已签核<span class="layui-badge">{$welldone}</span></a>
+    </li>
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="javascript:;">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<div style="width: 899px;margin-top: 30px">
+<form class="layui-form"  style="width: 750px"  action='{:url("itform/addinfo")}' method="get"  >
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 100px">方案名称</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="scheme" required  lay-verify="required" placeholder="请输入方案名称" autocomplete="new-password" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 100px">申请单位</label>
+        <div class="layui-input-block">
+
+            <input type="text" name="title" required  lay-verify="required" placeholder="请输入申请单位" autocomplete="new-password" class="layui-input" >
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="">工号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="password" required lay-verify="required" placeholder="请输入工号" autocomplete="new-password" class="layui-input" style="margin-left: 30px">
+        </div>
+        <div class="layui-form-mid layui-word-aux" style="margin-left: 30px">辅助文字</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">级别</label>
+        <div class="layui-input-block">
+            <select name="city" lay-verify="required">
+                <option value=""></option>
+                <option value="normal">一般</option>
+                <option value="emergency">紧急</option>
+                <!--<option value="gz">广州</option>-->
+                <!--<option value="sz">深圳</option>-->
+                <!--<option value="hz">杭州</option>-->
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 90px">复选框</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="like1" title="写作" value="PE" checked>
+            <input type="checkbox" name="like2" title="阅读" value="QA" >
+            <input type="checkbox" name="like3" title="发呆" value="IE">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开关</label>
+        <div class="layui-input-block">
+            <input type="checkbox" name="switch" lay-skin="switch" lay-text="ON|OFF">
+
+
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 90px">单选框</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="男" title="男">
+            <input type="radio" name="sex" value="女" title="女" checked>
+        </div>
+    </div>
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label" style="width: 100px; ">方案计划</label>
+        <div class="layui-input-block">
+            <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+    <table id=""></table>
+</div>
+</body>
+<script type="text/javascript">
+    layui.use('element', function(){
+        var element = layui.element;
+        element.init();
+
+
+        //…
+    });
+    layui.use('form', function(){
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            //layer.msg(JSON.stringify(data.field));
+            console.log(data);//json数据的key就是标签对应的name
+            let fd = data.field;
+            console.log(fd);
+            $.ajax({
+                type:'post',
+                url:'{:url("itform/addinfo")}',
+                data:{fd:fd},
+                dataType:'json',
+                success:function (msg) {
+                    console.log(msg);
+                    if(msg==1){
+                        layui.use('layer',function(){
+                            let layer2=layui.layer;
+                            layer2.msg('Edit Success !',{
+                                icon:6
+                            });
+                        });
+                    }
+                },
+                error:function (msg) {
+                    console.log(msg)
+                }
+            });
+
+            return false;
+        });
+    });
+
+</script>
+</html>

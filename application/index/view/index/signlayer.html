@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>signlayer</title>
+</head>
+<link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+
+<body>
+    <div>
+        <strong><label>签核意见</label></strong>
+        <textarea class="layui-textarea" style="margin-top: 10px" id="sgn"></textarea>
+    </div>
+
+
+
+</body>
+<script type="text/javascript">
+    function callbackdata() {
+        //console.log(parent.id);
+        let id = parent.id;
+
+        let laydata = [];
+            laydata.push(parent.check);
+            laydata.push($('#sgn').val());
+
+        return laydata;
+    }
+</script>
+</html>

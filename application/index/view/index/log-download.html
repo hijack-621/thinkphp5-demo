@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>log-download</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+</head>
+<style>
+
+    @media screen and (max-width: 662px) {
+
+
+        .layui-col-md3::before{
+            content: '分辨率太低啦！，请换设备';
+            text-align: center;
+        }
+
+    }
+    @media screen and (max-width: 992px) {
+        .layui-row{
+            display: none;
+        }
+        .layui-container::before{
+            content:'分辨率太低啦！，请换设备';
+            text-align: center;
+        }
+
+
+
+    }
+    @media screen and (max-width: 1201px) {
+    .layui-form-item{
+        width: auto;
+    }
+
+
+    }
+
+    @media screen and (min-width: 1250px) {
+
+
+    }
+    .layui-input::-webkit-input-placeholder{
+        text-align: center;
+    }
+    .layui-col-md2{
+
+    }
+    .layui-container{
+
+    }
+    .att{
+        text-align: center;
+    }
+</style>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<blockquote class="layui-elem-quote layui-quote-nm" style="text-align: center">LOG Download</blockquote>
+    <div class="layui-container">
+        <div class="layui-row" >
+            <form class="layui-form" action="">
+                <div class="layui-form-item" style="text-align: center" >
+                    <div class="layui-col-md4" >
+                     <div class="layui-row">
+                             <div class="layui-col-md6">
+                                 <div class="layui-form-item">
+                                     <div class="layui-input-inline">
+                                         <select name="TPR" >
+                                             <option value=""></option>
+                                             <option value="tnb" selected>TNB</option>
+                                             <!-- <option value="CEB">CEB</option>
+                                             <option value="CEP">CEP</option>
+                                             <option value="IGS">IGS</option>
+                                             <option value="CTS">CSAT</option>
+                                             <option value="TSI">TSI</option> -->
+                                         </select>
+                                     </div>
+                                 </div>
+
+                         </div>
+                         <div class="layui-col-md4 layui-col-md-offset2 ">
+                             <div class="layui-form-item">
+                                 <div class="layui-input-inline">
+                                     <input type="text" class="layui-input" title="" name="PPID" placeholder="key-in-SN"/>
+                                 </div>
+
+                             </div>
+
+                         </div>
+                     </div>
+                    </div>
+                    <div class="layui-col-md7 layui-col-md-offset1 ">
+                       <div class="layui-row">
+                           <div class="layui-col-md3 att layui-col-md-offset1 ">
+                               <div class="layui-form-item">
+                                   <div class="layui-input-inline">
+                                       <input type="date" name="bdate" class="layui-input" title="" />
+                                   </div>
+                               </div>
+
+                           </div>
+                           <div class="layui-col-md3 att layui-col-md-offset1" style="padding-left: 30px">
+                               <div class="layui-form-item">
+                                   <div class="layui-input-inline">
+                                       <input type="date" name="edate" class="layui-input" title="" />
+                                   </div>
+                               </div>
+
+                           </div>
+                           <div class="layui-col-md3 att layui-col-md-offset1" >
+                               <div class="layui-form-item">
+                                   <div class="layui-btn-group">
+                                       <button class="layui-btn" lay-submit lay-filter="search" >Search</button>
+                                   </div>
+
+                               </div>
+
+                           </div>
+                       </div>
+                    </div>
+
+
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div style="width: 900px;margin-left: 50%;transform: translateX(-50%);margin-top: 25px">
+        <table id="tabppid" style="margin-left: auto;margin-right: auto" lay-filter="logtable">
+
+        </table>
+    </div>
+</body>
+<script>
+    jQuery(document).ready(function () {
+        let tdata=[];
+        //let cols = [];
+        layui.use('element', function(){
+            let element = layui.element;
+            element.init();
+            //…
+        });
+        layui.use(['form','table','layer'],function () {
+            let form = layui.form;
+            let table = layui.table;
+            table.render({
+                elem:'#tabppid'
+                ,height: 250
+                ,title:'log_report'//导出文件么设置了title属性的话文件么默认是title
+                ,page: true //开启分页
+                ,data:tdata
+                ,id:'tabppid'
+                ,cols:[[
+                    {field:'Type',title:'Type',align:'center'},
+                    {field:'Station',title:'Station',align:'center'},
+                    {field:'Date',title:'Date',align:'center'},
+                ]]
+                ,text:{
+                    none:'无数据'
+                }
+            });
+
+            form.on('submit(search)',function (data) {
+               // console.log(data.field);
+                let field = data.field;
+                //console.log(field.TPR);
+                $.ajax({
+                    type:'post',
+                    data:{field:field},
+                    dataType:'json',
+                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                    url:'{:url("itform/getppid")}',
+                    success:function(msg){
+                        console.log(msg);
+                        tdata = msg;
+
+                        table.reload('tabppid',{
+                            data:tdata
+                            ,cols:[[
+                                {field:'Type',title:'Type',align:'center'},
+                                {field:'Station',title:'Station',align:'center',templet:function (data) {
+                                        if(data['download']=='not upload'){
+                                            return '<a href="javascript:void(0)" class="layui-table-link" onclick="hint()"  > '+data['Station']+' </a> ';
+                                        }else{
+                                            return '<a href="'+data['download']+'" class="layui-table-link" download=" '+data['download']+' "  > '+data['Station']+' </a> ';
+
+                                        }
+                                    }},
+                                {field:'Date',title:'Date',align:'center'},
+                            ]]
+                        })
+                        //console.log(111);
+                    },
+                    error:function (msg) {
+                        console.log(msg);
+                    }
+
+                });
+                return false;
+
+
+            });
+        })
+    });
+function hint() {
+    layui.use('layer',function () {
+        let layer = layui.layer;
+        layer.msg('not upload!');
+    })
+}
+</script>
+
+
+</html>

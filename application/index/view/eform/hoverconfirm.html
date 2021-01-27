@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm</title>
+</head>
+<link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+<style>
+    .layui-table{
+        text-align: center;
+    }
+    .layui-table th{
+        /*表头内容居中显示*/
+        text-align: center;
+    }
+</style>
+<body>
+<div style="width: 1165px;margin-left: auto;margin-right: auto;margin-top: 15px"  >
+    <table id="cmtab"  lay-filter="cmtab">
+
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    let fdata= [];
+    fdata[0] = parent.fdata;//格式必须要正确
+
+    layui.use(['table','layer'],function () {
+        let layer1 = layui.layer;
+        let ftb = layui.table;
+        for(let key in fdata[0]){
+            //console.log(key);
+            //console.log(fdata[0][key])
+            if(fdata[0][key]==''){
+                ftb.render({
+                    elem:'#cmtab'
+                    ,cols:[[
+                        {field: 'employeeId' ,title:'工號',width:100},
+                        {field: 'deptcode',  title:'部門代號',width:100},
+                        {field: 'employeeName',   title:'姓名',width:80,},
+                        {field: 'overtime_type',   title:'加班类别',width:100,},
+                        {field: 'dntype',   title:'班别',width:100,},
+                        {field: 'ocmtype',   title:'加班計算方式',width:120,},
+                        {field: 'nowday',   title:'加班歸屬日',width:100,},
+                        {field: 'btime',title:'起始時間',width:160},
+                        {field: 'etime', title:'截止時間',width:160},
+                        {field: 'rthour', title:'实际時數',width:120,},
+                        {field: 'oreason', title:'加班内容',},
+
+                    ]]
+                    ,data:''
+                    ,text:{ none:'无数据'}
+
+                });
+                layer1.msg('请正確填写表單',{icon: 5,time:800, shade:0.6},function () {
+                    setTimeout(jump,500);
+                });
+                break;
+            }else{
+
+
+                ftb.render({
+                    elem:'#cmtab'
+                    ,data:fdata
+
+                    ,cols:[[
+                        {field: 'employeeId' ,title:'工號',width:100},
+                        {field: 'deptcode',  title:'部門代號',width:100},
+                        {field: 'employeeName',   title:'姓名',width:80,},
+                        {field: 'overtime_type',   title:'加班类别',width:100,},
+                        {field: 'dntype',   title:'班别',width:100,},
+                        {field: 'ocmtype',   title:'加班計算方式',width:120,},
+                        {field: 'nowday',   title:'加班歸屬日',width:100,},
+                        {field: 'btime',title:'起始時間',width:160},
+                        {field: 'etime', title:'截止時間',width:160},
+                        {field: 'rthour', title:'实际時數',width:120,},
+                        {field: 'oreason', title:'加班内容',},
+
+                    ]],
+                })
+
+
+            }
+        }
+    });
+    //console.log( fdata );
+
+
+
+
+
+    function jump() {
+        let index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);//关闭当前页
+    }
+
+    function callbackdata() {
+        return fdata;
+    }
+
+</script>
+
+</html>

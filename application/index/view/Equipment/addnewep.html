@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tnb_index</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/public.css" media="all">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+
+</head>
+<body style="">
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('Equipment/pendlist')}">未结案清单<span class="layui-badge">{$pcount}</span></a>
+    </li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('Equipment/pendlist')}">已结案清单<span class="layui-badge">{$ocount}</span></a>
+    </li>
+
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <dd><a href="{:url('index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+        <fieldset class="table-search-fieldset">
+            <legend>搜索[請輸入繁體文搜索]</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">儀器名稱</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="epname" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                   
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="submit"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-warm layui-btn-sm data-add-btn" lay-event="save">保存修改</button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm data-add-btn" lay-event="add"> 添加 </button>
+                <button class="layui-btn layui-btn-sm layui-btn-danger data-delete-btn" lay-event="delete"> 删除 </button>
+            </div>
+        </script>
+        <div style="width: 95%;height: 350px;margin: 0 auto;">
+        <table class="layui-hide" id="tableid" lay-filter="tableid"></table>
+        </div>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+
+        //…
+    });
+    layui.use(['form', 'table','layer'],function(){
+        let    table = layui.table;
+        let    form = layui.form;
+        let    layer = layui.layer;
+        
+        table.render({
+            elem:'#tableid',
+            id:'tableid',
+            url: '{:url("Equipment/tabledata")}',
+            toolbar: '#toolbarDemo',
+            defaultToolbar: ['filter', 'exports', 'print', {
+                title: '提示',
+                layEvent: 'LAYTABLE_TIPS',
+                icon: 'layui-icon-tips'
+            }],
+            cols: [[
+                {type: "checkbox", width: 50},
+                {field: 'id', width: 55, title: 'ID',hide:true,},
+                {field: 'yiqimingcheng', width: 135, title: '儀器名稱',edit:'text' },
+               
+                {field: 'changpai', width: 130, title: '廠牌', edit:'text'},
+                {field: 'xinghao', width: 120, title: '型號',edit:'text' },
+                {field: 'chuchangbianhao', width: 120, title: '出廠編號',edit:'text'},
+                {field: 'plant', width: 95, title: '厂区',edit:'text'},
+                {field: 'deptname', width: 135, title: '部門別',edit:'text'},
+                {field: 'deptcode', width: 122, title: '部門代號', edit:'text'},
+                {field: 'jiaoyanriqi', width: 105, title: '校驗日期',edit:'text'},
+                {field: 'jiaoyanxingzhi', width: 100, title: '校驗性質',edit:'text' },
+                {field: 'jiaoyanzhouqi', width: 100, title: '校驗週期', edit:'text'},
+                {field: 'youxiaoriqi', width: 115, title: '有效日期',edit:'text' },
+                {field: 'baoguanrengonghao', width: 115, title: '保管人工號',edit:'text'},
+                {field: 'baoguanren', width: 105, title: '保管人', edit:'text'},
+                {field: 'yiqifuzerengonghao', width: 105, title: '儀器負責人工號',edit:'text'},
+                {field: 'yiqifuzeren', width: 105, title: '儀器負責人',edit:'text' },
+                {field: 'step1_master_no', width: 155, title: '課級(第一階)主管工號',edit:'text'},
+                {field: 'step1_master_name', width: 155, title: '課級(第一階)主管',edit:'text' },
+                {field: 'step2_master_no', width: 155, title: '理級(第二階)主管工號',edit:'text'},
+                {field: 'step2_master_name', width: 155, title: '理級(第二階)主管',edit:'text'},
+                {field: 'step3_master_no', width: 155, title: '處級(第三階)主管工號',edit:'text' },
+                {field: 'step3_master_name', width: 155, title: '處級(第三階)主管',edit:'text'},
+                {field: 'jiaoyanbianhao', title: '校驗編號', minWidth: 110,edit:'text'},
+              
+                {field: 'xinzengriqi', width: 135, title: '新增日期', edit:'text'},
+                {field: 'beizhu', width: 155, title: '備註',edit:'text' },
+                
+                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+            ]]
+            ,page:{
+                limit:30,
+                curr:1
+            }
+            ,height:440
+        });
+           /**
+         * toolbar监听事件
+         */
+         table.on('toolbar(tableid)', function (obj) {
+            if (obj.event === 'add') {  // 监听添加操作
+                layer.open({
+                    title: '设备添加',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin:true,
+                    shadeClose: true,
+                    area: ['60%', '35%'],
+                    content: './add.html',
+                    btn: ['保存','关闭'],      
+                    yes:function (index) {
+                        let res = window["layui-layer-iframe" + index].callbackdata();
+                         console.log(res);
+                        
+                        if(res) {
+                            $.ajax({
+
+                                url:'{:url("Equipment/addnew")}',
+                                dataType:'json',
+                                data:{data:res},
+                                type:'post',
+                                success:function (msg) {
+                                    console.log(msg);
+                                    if(msg>=1){
+                                        layer.msg('添加成功',{icon:6,shade:0.4},function () {
+                                            window.location.reload();
+                                        })
+                                    }
+
+                                },
+                                error:function (msg) {
+                                    console.log(msg);
+                                }
+                            })
+                        }
+
+
+
+                    }
+                });
+                // $(window).on("resize", function () {
+                //     layer.full(index);
+                // });
+
+            } 
+            else if (obj.event === 'delete') {  // 监听删除操作
+                var checkStatus = table.checkStatus('tableid'),
+                     data = checkStatus.data;
+              
+                //console.log(data);checkbox勾选几个  data对象长度就会为对应长度！！！对象的每个元素对应为表格一条记录！！
+                if(data.length>0){
+                    layer.confirm('确定删除所勾选的记录么?',{icon: 3, title:'提示'},function(index){
+                            layer.alert('点击确定，删除成功！');
+                            $.ajax({
+                                url:'{:url("Equipment/delete")}',
+                                dataType:'json',
+                                data:{data:data},
+                                type:'post',
+                                success:function (msg) {
+                                    console.log(msg);
+                                    if(msg>=1){
+                                        layer.msg('删除成功',{icon:6,shade:0.4},function () {
+                                            window.location.reload();
+                                        })
+                                    }
+
+                                },
+                                error:function (msg) {
+                                    console.log(msg);
+                                }  
+                            })
+                            layer.close(index);
+                    },function(index){
+                        layer.alert('点击了取消');
+                        layer.close(index);
+                    })
+                }
+            }
+           
+        });
+        //监听表格复选框选择
+        table.on('checkbox(tableid)', function (obj) {
+            console.log(obj)
+        });
+        let id = 0;
+        let editobj ={};
+        //監聽表格單元格編輯事件
+        table.on('edit(tableid)',function(obj){
+            id++;
+                let val = obj.value
+                        ,data= obj.data
+                        ,field1 = obj.field;
+                        let tr = obj.tr;
+                        let oldtext = $(tr).find("td[data-field='"+obj.field+"'] div").text();
+                       
+                      
+                        // if( id.indexOf(data.id)===-1){
+                        //     id.push(data.id);
+                            editobj[id] = {
+                                field:field1,
+                                value:val,
+                                id:data.id,
+                            };
+                        table.on('toolbar(tableid)',function(obj){
+                            if(obj.event=='save'){
+                                console.log(editobj)
+                              if(id>0){
+                                $.ajax({
+                                url:'{:url("Equipment/save_edit")}',
+                                dataType:'json',
+                                data:{data:editobj},
+                                type:'post',
+                                success:function (msg) {
+                                    console.log(msg);
+                                    if(msg>=1){
+                                        layer.msg('修改成功',{icon:6,shade:0.4},function () {
+                                            window.location.reload();
+                                        })
+                                    }
+
+                                },
+                                error:function (msg) {
+                                    console.log(msg);
+                                }  
+                                    })
+                                }
+                            }
+                        })
+                        // }
+                       
+                       
+                        
+
+                        // console.log(val);
+                        // console.log(data);
+                        // console.log(field);
+                        
+                        // console.log(oldtext);
+        })
+
+
+
+        /*
+          搜索按鈕點擊事件 
+        */
+       form.on('submit(submit)',function(data){ //第一個submit表示提交，第二個lay-filter=’submit‘
+            let field = data.field;
+           //console.log(field['epname']);
+          
+           if(field['epname']==''){ //如果為空默認查詢全部數據，亦可做到查詢出數據後的刷新表格作用
+                //layer.msg('請至少輸入一個關鍵字後再檢索！');
+                $(".layui-form-search")[0].reset();//清空form表单
+   
+                setTimeout(function(){
+                    table.reload('tableid', { //表格的id
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        },
+                        where:null 
+                    });
+                },800);
+                table.render();
+           }else{
+             
+                        layer.msg('查詢中，請稍後',{time:700,icon:16})
+                        
+                        table.reload('tableid',{
+                            response:{
+                            statusCode:0
+                        }
+                        ,where:{index:field['epname']}    
+                        ,url:'{:url("equipment/searchep")}'
+                        ,page: {
+                            limit:30,
+                            curr: 1 //重新从第 1 页开始
+                        }
+                        ,text:{
+                            none:'查無符合的數據'
+                        }
+                       })
+                       
+                      
+           }
+           return false;
+       })
+
+    })
+</script>
+</html>

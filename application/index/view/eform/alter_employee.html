@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人事变动</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/style1.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layout.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/lfmpage.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui_global.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script src="__PUBLIC__/js/jquery.particleground.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/date.format.js" charset="utf-8"></script>
+</head>
+<style>
+    .bg{
+        background-color: #ffffff;
+        width: 86%;
+        height: 500px;
+        position: absolute;
+        border:1px solid #fff;
+        border-radius:3px;
+        padding:14px 20px;
+        box-shadow:0 0 8px #eeeeee;
+        left:50%;
+        top:-30px;
+        transform: translateX(-50%);
+    }
+</style>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none;padding-left: 0">Compal SOD Software Management System</a></li>
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <dd><a href="{:url('index/index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<div class="view-body" style="margin-top: 15px">
+    <div class="view-sidebar" style="margin-top: 5px">
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold  ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">新填表單</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('Eform/leave_form')}" >
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/advanced_apply')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/holiday_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/normal_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/business_trip')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">表單導出</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/exportlfm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportapp')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exporthover')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportnorm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportbust')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">加班明細</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display:none">
+                    <li>
+                        <a href="{:url('eform/details')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/jiaban.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">加班明細</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav  ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">人事变动</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="">
+                    <li>
+                        <a href="{:url('eform/alteremp')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/yg.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">人事变动&加班指标</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="view-product" style="overflow: hidden;background-color: #CCC">
+        <div class="formcontent">
+            <div class="bg">
+                <div class="site-title">
+                    <fieldset>
+                        <legend>
+                            <a name="input">人员汇总情况[仅管理员可操作]</a>
+                        </legend>
+                    </fieldset>
+                </div>
+                <table class="layui-hide" id="emplist" lay-filter="emplist"></table>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="edit">保存</button>
+        <button class="layui-btn layui-btn-sm" data-type='cancelTask'>添加</button>
+    </div>
+
+
+</script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+    });
+
+    $(document).ready(function(){
+        $('.view-product').particleground({
+            dotColor:'#0c75f7',
+            lineColor:'#0c75f7'
+        });
+        $(".sidebar-title").on('click', function() { //live 在  jq 1.9以上版本被废弃
+            if ($(this).parent(".sidebar-nav").hasClass("sidebar-nav-fold")) {
+                $(this).next().slideDown(200);
+                $(this).parent(".sidebar-nav").removeClass("sidebar-nav-fold");
+            } else {
+                $(this).next().slideUp(200);
+                $(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
+            }
+        });
+        $("body").on('click','.layui-btn-container .layui-btn', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        var active = {
+            cancelTask:function(){
+                layer.ready(function () {
+                    layer.open({
+                        type:2,
+                        title:'人员添加',
+                        maxmin:true,
+                        shadeClose:true,
+                        area:['1000px','360px'],
+                        content:"{:url('eform/adduser')}",
+                        btn: ['確定','关闭'],
+                        yes:function (index) {
+                            let res = window["layui-layer-iframe" + index].callbackdata();
+                            console.log(res);
+                            if(res[0]['name']===''||res[0]['deptcode']===''||res[0]['deptname']===''||res[0]['job_id']==='') {
+                                layer.msg('人员信息缺失或有误，请重新填写',{time:1800},function () {
+
+                                })
+
+                            }else{
+                                $.ajax({
+
+                                    url:'{:url("Eform/useradd")}',
+                                    dataType:'json',
+                                    data:{data:res},
+                                    type:'post',
+                                    success:function (msg) {
+                                        console.log( msg);
+                                        if(msg==1){
+                                            layer.msg('人员添加成功',{icon:6,shade:0.4},function () {
+                                                layer.close(index);
+                                                table.reload('emplist',{
+
+                                                })
+                                            })
+                                        }
+
+                                    },
+                                    error:function (msg) {
+                                        console.log(msg);
+                                    }
+                                })
+                            }
+
+
+
+                        }
+
+
+                    })
+                });
+            }
+        };
+
+        let nowtime = new Date().format('Y/m/d H:i:s');
+        //console.log(nowtime);
+        $('#filltime').val(nowtime);
+        layui.use([ 'layer','table'],function () {
+            let table = layui.table;
+            let layer = layui.layer;
+            let id=  [];
+            table.render({
+                elem:'#emplist'
+                ,id:'emplist'
+                ,url:'/tp5/index/eform/emp_list'
+                ,toolbar: '#toolbar'
+                ,defaultToolbar: []
+                ,title: '人员列表'
+                ,totalRow:true
+                ,cols: [[
+                    {type: 'checkbox',},
+                    {field: 'id' ,title:'ID',width:60,},
+                    {field: 'name',   title:'姓名',edit:'text'},
+                    {field: 'job_id' ,title:'工號',edit:'text'},
+                    {field: 'dept_name',  title:'部門',edit:'text'},
+                    {field: 'dept_no',  title:'部門代號',edit:'text',totalRowText:'计费合计:'},
+                    {field: 'total',  title:'分配加班时数',edit:'text',totalRow:true},
+                    { title:'操作', toolbar: '#barDemo', width:100}
+                ]]
+                ,page:{
+                    limit:40,
+                    curr:1,
+                    //只配置这个参数无法达到分页效果，后端还得处理！！！
+                }
+                ,height:410
+                ,parseData:function (res) {
+                   // let oldData = table.cache['emplist'];
+
+
+                }
+               
+                ,done:function (res) {
+                    fnSetNoDouble();
+                }
+
+            });
+
+            // var active = {
+            //     addRow: function(){	//添加一行
+            //         var oldData = table.cache['emplist'];
+            //         console.log(oldData);
+            //         var newRow = {tempId: new Date().valueOf(), type: null, name: '请填写名称', state: 0};
+            //         oldData.push(newRow);
+            //         tableIns.reload({
+            //             data : oldData
+            //         });
+            //     },
+            //     updateRow: function(obj){
+            //         var oldData = table.cache[layTableId];
+            //         console.log(oldData);
+            //         for(var i=0, row; i < oldData.length; i++){
+            //             row = oldData[i];
+            //             if(row.tempId == obj.tempId){
+            //                 $.extend(oldData[i], obj);
+            //                 return;
+            //             }
+            //         }
+            //         tableIns.reload({
+            //             data : oldData
+            //         });
+            //     },
+            //     removeEmptyTableCache: function(){
+            //         var oldData = table.cache[layTableId];
+            //         for(var i=0, row; i < oldData.length; i++){
+            //             row = oldData[i];
+            //             if(!row || !row.tempId){
+            //                 oldData.splice(i, 1);    //删除一项
+            //             }
+            //             continue;
+            //         }
+            //         tableIns.reload({
+            //             data : oldData
+            //         });
+            //     },
+            //     save: function(){
+            //         var oldData = table.cache[layTableId];
+            //         console.log(oldData);
+            //         for(var i=0, row; i < oldData.length; i++){
+            //             row = oldData[i];
+            //             if(!row.type){
+            //                 layer.msg("检查每一行，请选择分类！", { icon: 5 }); //提示
+            //                 return;
+            //             }
+            //         }
+            //         document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId], null, 2);	//使用JSON.stringify() 格式化输出JSON字符串
+            //     }
+            // };
+
+            table.on('edit(emplist)',function (obj) { //emplist  为table lay-filter这个属性的attr
+                    // var checkStatus = table.checkStatus(obj.config.id);//绑定 toolbar事件，完成修改的信息及入库更新
+                    let  val = obj.value
+                        ,data= obj.data
+                        ,field = obj.field;
+                        var tr = obj.tr;
+                        var oldtext = $(tr).find("td[data-field='"+obj.field+"'] div").text();
+                        console.log(data);
+                        console.log(val);
+                        console.log(field);
+                    //绑定 toolbar事件，完成修改的信息及入库更新
+                    table.on('toolbar(emplist)', function(obj){    //绑定 toolbar事件，完成修改的信息及入库更新
+                        let event = obj.event;
+                        if(event==='edit'){
+                            let checkStatus = table.checkStatus(obj.config.id);
+                            //console.log(checkStatus.data);
+                            let len = checkStatus.data.length;
+                            let edata =checkStatus.data;
+
+                            if(field==='total'){
+                                if(len<=1){
+                                    id.push(edata[0]['id']);
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +'的] '+' 当月加班时数更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+                                                })
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+
+
+                                    //console.log(id);
+                                }else{
+                                    for(let i=0;i<len;i++){
+                                        id.push(edata[i]['id']);
+                                    }
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +']等人的 '+' 当月加班时数更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+                                                })
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+                                    //console.log(id);
+                                }
+                            } else if(field==='dept_name'){
+                                if(len<=1){
+                                    id.push(edata[0]['id']);
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +'的] '+' 部门名称更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+})
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+                                }else{
+                                    for(let i=0;i<len;i++){
+                                        id.push(edata[i]['id']);
+                                    }
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +']等人的 '+' 部门名称更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+})
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+                                }
+                            }else if(field==='dept_no'){
+                                if(len<=1){
+                                    id.push(edata[0]['id']);
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +'的] '+' 部门代号更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+})
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+                                }else{
+                                    for(let i=0;i<len;i++){
+                                        id.push(edata[i]['id']);
+                                    }
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +']等人的 '+' 部门代号更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+})
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+
+                                }
+                            }else if(field==='name'){
+                                if(len<=1){
+                                    id.push(edata[0]['id']);
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ oldtext +'的] '+' 姓名更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+})
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+                                }else{
+                                    for(let i=0;i<len;i++){
+                                        id.push(edata[i]['id']);
+                                    }
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +']等人的 '+' 姓名更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+})
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+
+                                }
+                            }else if(field==='job_id'){
+                                if(len<=1){
+                                    id.push(edata[0]['id']);
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +'的] '+' 工号更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+                                                })
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+                                }else{
+                                    for(let i=0;i<len;i++){
+                                        id.push(edata[i]['id']);
+                                    }
+                                    $.ajax({
+                                        url:'{:url("eform/updateinfo")}',
+                                        type:'post',
+                                        dataType:'json'
+                                        ,data:{id:id,field:field,val:val},
+                                        success:function (msg) {
+                                            console.log(msg);
+                                            layer.msg('将['+ data.name +']等人的 '+' 工号更改为：'+ val,{time:1800},function () {
+                                                table.reload('emplist',{
+
+                                                })
+                                            });
+
+                                        },
+                                        error:function (emsg) {
+                                            console.log(emsg)
+                                        }
+                                    });
+
+
+                                }
+                            }
+                        }
+
+
+                    });  //绑定 toolbar事件，完成修改的信息及入库更新
+
+            });
+
+            table.on('tool(emplist)',function (obj) {
+
+                //表格内toolbar事件  //
+                let data = obj.data;
+                 console.log(data.id);
+                let gh = "{$Think.session.employee_id}";
+                let dflag = "{$Think.session.pexport}";
+                if(obj.event==='del'){
+                    layer.confirm('真的删除这一行么？',function (index) {
+                        if(dflag==1){
+                            obj.del();
+                            $.ajax({
+                                url:'{:url("eform/delete_user")}',
+                                type:'post',
+                                dataType:'json',
+                                data:{id:data.id,table:'think_user'},
+                                success:function(msg){
+                                    if(msg===1){
+                                        layer.msg('删除成功！',function(){
+                                           window.location.reload();
+                                        });
+                                    }
+                                },
+                                error:function(emsg){
+                                    console.log(emsg);
+                                }
+                            });
+                            layer.close(index);
+                        }
+                        else  if(data.job_id !== gh && dflag==0 ){
+                            layer.msg('非管理員不允許刪除该项数据');
+                            return '';
+
+                        }
+
+                    });
+
+                }
+
+            });// 表格单元格事件的绑定，完成每条数据的删除
+            // table.on('toolbar(emplist)',function (obj) {
+            //     let event = obj.event;
+            //     if(event==='add'){
+            //         layer.ready(function () {
+            //             layer.open({
+            //                 type:2,
+            //                 title:'人员添加',
+            //                 maxmin:true,
+            //                 shadeClose:true,
+            //                 area:['1000px','360px'],
+            //                 content:"{:url('eform/adduser')}",
+            //                 btn: ['確定','关闭'],
+            //                 yes:function (index) {
+            //                     let res = window["layui-layer-iframe" + index].callbackdata();
+            //                      console.log(res);
+            //                     if(res[0]['name']===''||res[0]['deptcode']===''||res[0]['deptname']===''||res[0]['job_id']==='') {
+            //                         layer.msg('人员信息缺失或有误，请重新填写',{time:1800},function () {
+            //                             window.location.reload();
+            //                         })
+
+            //                     }else{
+            //                         $.ajax({
+
+            //                             url:'{:url("Eform/useradd")}',
+            //                             dataType:'json',
+            //                             data:{data:res},
+            //                             type:'post',
+            //                             success:function (msg) {
+            //                                 console.log( msg);
+            //                                 if(msg==1){
+            //                                     layer.msg('人员添加成功',{icon:6,shade:0.4,time:1800},function () {
+            //                                     layer.close(index);
+            //                                     table.reload('emplist',{})
+            //                                     })
+            //                                 }
+
+            //                             },
+            //                             error:function (msg) {
+            //                                 console.log(msg);
+            //                             }
+            //                         })
+            //                     }
+
+
+
+            //                 }
+
+
+            //             })
+            //         });
+            //     }
+            // })
+
+        })
+
+
+    });
+
+    function fnSetNoDouble() {
+    setTimeout(function () {
+        fnGetTotalDiv(6);//删除数据所在列
+    }, 100);
+};
+//删除合计行的小数点
+function fnGetTotalDiv(id) {
+    var div = '.layui-table-total div:eq(' + id + ')';
+    var a = $(div).html();
+    // 进行剪切
+    a = a.substr(0, a.indexOf("."));
+    $(div).html(a+'H');
+};
+
+
+
+</script>
+</html>

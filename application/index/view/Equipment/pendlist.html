@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校验清单</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+</head>
+<style>
+/* .layui-table-cell {
+    height: auto ;
+    white-space: normal;
+} 实现单元格内容不折叠，超出就换行*/
+
+</style>
+<body>
+    <ul class="layui-nav" lay-filter="">
+
+        <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+    
+        <li class="layui-nav-item">
+            <a href="{:url('Equipment/pendlist')}" >未结案清单<span class="layui-badge">{$pcount}</span></a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="{:url('Equipment/pendlist')}">已结案清单<span class="layui-badge">{$ocount}</span></a>
+        </li>
+    
+    
+        <ul class="layui-nav layui-layout-right" lay-filter="">
+            <li class="layui-nav-item" >
+                <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('index/login')}">退了</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </ul>
+
+    
+
+    <div style="width: 1155px;margin-left: 50%;transform: translateX(-50%);margin-top: 100px">
+        <table class="layui-table" lay-data="{width:1150,height:415, url:'/tp5/index/equipment/listdata', page:{limit:30,curr:1}, id:'infotable', skin:'row', even:true} " style="margin-left: auto;margin-right: auto">
+            <thead>
+            <tr>
+                <th lay-data="{field:'id',hide:true}">ID</th>
+                <th lay-data="{field:'name', templet: '#nameTpl'}">仪器名称</th>
+                <th lay-data="{field:'model',}">型号</th>
+                <th lay-data="{field:'brand' , }">厂牌</th>
+                <th lay-data="{field:'plant'  ,templet:'#signer'}">厂区</th>
+                <th lay-data="{field:'dept'  ,templet:'#signer'}">部门</th>
+                <th lay-data="{field:'checktype' ,templet:'#signer'}">校验性质</th>
+                <th lay-data="{field:'custodian' ,templet:'#signer'}">保管人</th>
+                <th lay-data="{field:'incharge' ,templet:'#signer'}">负责人</th>
+                <th lay-data="{field:'director1' ,templet:'#signer'}">保管人主管</th>
+                <th lay-data="{field:'checkdata'  ,templet:'#signer' ,style:'color:yellow;background-color: #009688;'}">校验日期</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+
+</body>
+
+<script type="text/html" id="nameTpl">
+     <a href="{:url('equipment/signpage')}?id={{d.id}}" class="layui-table-link" >{{ d.name }}</a>
+ </script>
+
+ 
+
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+    });
+
+    layui.use('table',function () {
+        let table = layui.table;
+
+    })
+</script>
+</html>

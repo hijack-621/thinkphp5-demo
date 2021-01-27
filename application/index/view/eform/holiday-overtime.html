@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>例假加班单</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/style1.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layout.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/lfmpage.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui_global.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script src="__PUBLIC__/js/jquery.particleground.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/date.format.js" charset="utf-8"></script>
+</head>
+<style>
+    .layui-input::-webkit-input-placeholder{
+        text-align: center;
+    }
+    .layui-input::-webkit-input-placeholder{
+        text-align: center;
+    }
+    .layui-input{
+        text-align: center;
+    }
+    option{
+        text-align: center;
+    }
+    .laydate-day-mark{
+        background-color: #0c75f7!important;
+    }
+
+    .layui-laydate-content>.layui-laydate-list {
+        padding-bottom: 0;
+        overflow: hidden;
+    }
+    .layui-laydate-content>.layui-laydate-list>li{
+        width:50%;
+
+    }
+    .laydate-time-list>li>ol>li.layui-this{
+        background-color:#0c75f7!important;
+
+    }
+    .laydate-time-list li:nth-child(1) ol li:nth-child(1){
+        /*background-color:#0c75f7ba!important;*/
+        /*color: #fff;*/
+    }
+    .merge-box .scrollbox .merge-list {
+        padding-bottom: 5px;
+    }
+    .runtest{position: relative;width: 200px;height: 150px;}
+    .runtest p{
+      margin-left: 30px;
+    }
+    .layui-layer-title{
+        text-align: center!important;
+    }
+
+
+</style>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none;padding-left: 0">Compal SOD Software Management System</a></li>
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+
+                <dd><a href="{:url('index/index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+
+<div class="view-body" style="margin-top: 15px">
+    <div class="view-sidebar" style="margin-top: 5px">
+        <div class="sidebar-content">
+            <div class="sidebar-nav ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">新填表單</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" >
+                    <li>
+                        <a href="{:url('Eform/leave_form')}" >
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/advanced_apply')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" onclick="reload()">
+
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/normal_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/business_trip')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">表單導出</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('Eform/exportlfm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/exportapp')}" onclick="reload()">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/exporthover')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/exportnorm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/exportbust')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">加班明細</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/details')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/jiaban.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">加班明細</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">人事变动</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/alteremp')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/yg.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">员工变动&加班指标</span>
+                        </a>
+                    </li>
+                   
+
+
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="view-product" style="overflow: hidden;background-color: #CCC">
+        
+        <div class="runtest">
+
+        </div>
+        
+        <div class="formcontent">
+            <form class="layui-form "  action="" >
+                <div class="site-title">
+                    <fieldset>
+                        <legend>
+                            <a name="input">填单人信息</a>
+                        </legend>
+                    </fieldset>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">填表人</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input athinput" disabled='disabled' name="employeeId" value="{$Think.session.employee_id}"/>
+                        </div>
+                        <div class="layui-input-inline" style="margin-left: 120px">
+                            <input class="layui-input athinput" disabled='disabled' name="employeeName" value="{$Think.session.Cname}"/>
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="margin-left: 50px">
+                        <label class="layui-form-label">填表時間</label>
+                        <div class="layui-input-inline">
+                            <input class="layui-input athinput" name="filltime" id="filltime" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">部門别</label>
+                            <div class="layui-input-inline" >
+                                <input class="layui-input athinput" disabled='disabled' name="deptcode" value="{$Think.session.DeptCode}" />
+                            </div>
+                            <div class="layui-input-inline" style="margin-left: 120px">
+                                <input class="layui-input athinput" disabled='disabled' name="deptcn" value="{$Think.session.Cdept}" />
+                            </div>
+                        </div>
+                        <div class="layui-inline" style="margin-left: 50px">
+                            <label class="layui-form-label">專案代號</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input athinput" name="projectno" value="INR0000000" />
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="site-title" style="padding-top: 50px;">
+                    <fieldset>
+                        <legend>
+                            <a name="input">例假加班信息</a>
+                        </legend>
+                    </fieldset>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">加班类别</label>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-inline" >
+                                <select class="layui-select athinput" name="overtime_type">
+                                    <option>请选择</option>
+                                    <option selected value="2">2:例假</option>
+                                    <option value="3">3:國假</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">班别</label>
+                        <div class="layui-input-inline" style="margin-left: 27px;">
+                            <div class="layui-input-inline" >
+                                <select class="layui-select athinput" name="dntype">
+                                    <option>请选择</option>
+                                    <option selected value="1">1:白班</option>
+                                    <option value="2">2:夜班</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 120px">加班計算方式</label>
+                        <div class="layui-input-inline" style="margin-left: 10px;">
+                            <div class="layui-input-inline">
+                                <select class="layui-select athinput" name="ocmtype">
+                                    <option>请选择</option>
+                                    <option selected value="2">2:計加班费</option>
+                                    <option value="3">3:補休</option>
+                                    <option  value="1">1:不計加班费及補休</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">起始時間</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input athinput" id="btime" name="btime" placeholder="" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline" style="margin-left: 24px;">
+                        <label class="layui-form-label">结束時間</label>
+                        <div class="layui-input-inline" style="margin-left: 3px;">
+                            <input type="text" class="layui-input athinput" id="etime" name="etime" placeholder="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="layui-inline" style="margin-left: 18px;">
+                        <label class="layui-form-label">实际時數</label>
+                        <div class="layui-input-inline" style="margin-left: 33px;">
+                            <input type="text" class="layui-input athinput" id="rthour" name="rthour" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">加班日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input athinput" id="nowday" name="nowday" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">加班内容</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input athinput" id="wcontent" name="oreason" value="配合生产"/>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <div class="layui-input-inline" style="margin-left: 50px">
+                            <button type="button" lay-submit lay-filter="submit"  class="layui-btn layui-btn-radius" style="background-color:#0c75f7 ">表单提交</button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+    });
+
+    $(document).ready(function(){
+        $('.view-product').particleground({
+            dotColor:'#0c75f7',
+            lineColor:'#0c75f7'
+        });
+        let nowtime = new Date().format('Y/m/d H:i:s');
+        //console.log(nowtime);
+        $('#filltime').val(nowtime);
+        layui.use('layer',function () {
+            let lay = layui.layer;
+            lay.ready(function () {
+
+                    layer.open({
+                        type: 1
+                        ,title: '當月加班情况'
+                        ,id: 'Lay_layer_debug'
+                        ,content: $('.runtest')
+                        ,shade: false
+                        ,offset: 'rb'
+                        ,resize: false
+                        ,anim:2
+                        ,success: function(layero, index){
+                            layer.style(index, {
+                                marginLeft: -20
+                                ,marginTop:-150
+
+                            });
+                         $.ajax({
+                             type:'post',
+                             url:'{:url("eform/overtime_detail")}',
+                             data:{},
+                             dataType:'json',
+                             success:function (msg) {
+                                 let div = $('.runtest');
+                                 let html = '';
+                                 if(msg){
+                                  let sdata = msg['data'];
+                                  if(sdata[0]['zc']==='op'){
+                                      let total = sdata[0]['off_day']+sdata[0]['obilling'];
+                                      if(total<88){
+                                           html =
+                                              '<p>分配總時數為:'+sdata[0]['resign']+'H</p>' +
+                                              '<p>已計費總時數:'+sdata[0]['obilling']+'H</p>'+
+                                              '<p>記補休總時數:'+sdata[0]['off_day']+'H</p>'+
+                                              '<p>還剩:'+(sdata[0]['resign']-(sdata[0]['obilling']+sdata[0]['off_day']))+'H可計費或記補休</p>' ;
+                                              div.append(html);
+                                      }else{
+                                        html='<span>当月加班已达上限，请早点下班休息吧！</span>';
+                                       div.append(html);
+                                       $('button[type="button"]').addClass('layui-hide');
+                                      }
+                                     
+
+                                  }else{
+                                      if(sdata[0]['off_day']<28&&sdata[0]['obilling']<60){
+                                           html =
+                                              '<p>分配總時數為:'+sdata[0]['resign']+'H</p>' +
+                                              '<p>已計費總時數:'+sdata[0]['obilling']+'H</p>'+
+                                              '<p>記補休總時數:'+sdata[0]['off_day']+'H</p>'+
+                                              '<p>還剩:'+(sdata[0]['resign']-sdata[0]['obilling'])+'H可計費</p>'+
+                                              '<p>還剩:'+(28-sdata[0]['off_day'])+'H可記補休</p>';
+                                          div.append(html);
+                                      }else if(sdata[0]['off_day']<28&&sdata[0]['obilling']===60){
+                                           html =
+                                              '<p>分配總時數為:'+sdata[0]['resign']+'H</p>' +
+                                              '<p>已計費總時數:'+sdata[0]['obilling']+'H</p>'+
+                                              '<p>記補休總時數:'+sdata[0]['off_day']+'H</p>'+
+                                              '<p>計費時數已達上限,如再填報加班請記補休</p>'+
+                                              '<p>還剩:'+(28-sdata[0]['off_day'])+'H可記補休</p>';
+                                          div.append(html);
+                                      }else if(sdata[0]['off_day']===28&&sdata[0]['obilling']<60){
+                                           html =
+                                              '<p>分配總時數為:'+sdata[0]['resign']+'H</p>' +
+                                              '<p>已計費總時數:'+sdata[0]['obilling']+'H</p>'+
+                                              '<p>記補休總時數:'+sdata[0]['off_day']+'H</p>'+
+                                              '<p>還剩:'+(sdata[0]['resign']-sdata[0]['obilling'])+'H可計費</p>'+
+                                              '<p>記補休時數已達上限,如再填報加班請計費</p>';
+                                          div.append(html);
+                                      }else if(sdata[0]['off_day']===28&&sdata[0]['obilling']===60){
+                                           html =
+                                              '<span>本月加班額度已達上限，請早點下班休息，請勿再提報加班，以免異常</span>';
+                                          div.append(html);
+                                          $('button[type="button"]').addClass('layui-hide');
+
+                                      }
+
+                                  }
+
+
+                                 }
+                                 console.log(msg);
+
+
+                             },
+                             error:function (emsg) {
+                                 console.log(emsg);
+                             }
+                         })
+                        }
+
+                    });
+
+
+
+
+            });
+
+        })
+
+    });
+
+    $(".sidebar-title").on('click', function() { //live 在  jq 1.9以上版本被废弃
+        if ($(this).parent(".sidebar-nav").hasClass("sidebar-nav-fold")) {
+            $(this).next().slideDown(200);
+            $(this).parent(".sidebar-nav").removeClass("sidebar-nav-fold");
+        } else {
+            $(this).next().slideUp(200);
+            $(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
+        }
+    });
+
+    function formatminutes() {
+        //自定义分钟 分钟间隔设置为5分钟
+        var mshowtime = $($(".laydate-time-list li ol")[1]).find("li");//min
+        var hshowtime = $($(".laydate-time-list li ol")[0]).find("li");//hour
+        for (var i = 0; i < mshowtime.length; i++) {
+            var t00 = mshowtime[i].innerText;
+            if (t00%5!=0 ) {
+                //console.log(mshowtime[i])
+                mshowtime[i].remove();
+
+            }
+        }
+        for (var j = 0; j < hshowtime.length; j++) {
+            var t00h = parseInt(hshowtime[j].innerText);
+            // console.log(  t00h);
+            if (t00h < 8 || t00h > 24 ) {
+                //console.log(hshowtime[j]);
+                hshowtime[j].remove();
+            }
+        }
+
+
+    }
+
+    function reload() {
+        window.location.reload();
+    }
+    layui.use(['form', 'laydate','layer'], function(){
+        let nowdate = new Date().format('Y-m-d');
+        let dobj = {};
+        dobj[nowdate] = '';
+        let date = [];
+        let btime = '';
+        let form = layui.form;
+        let layer = layui.layer;
+        let laydate = layui.laydate;
+
+        laydate.render({
+            elem:'#nowday'
+            ,type:'datetime'
+            ,format:'yyyy/MM/dd'
+            ,mark:dobj
+            ,trigger:'click'
+            // ,ready:function () {
+            //     var timeDom = $('#layui-laydate1').find("span[lay-type='datetime']")[0];
+            //     $(timeDom).click(function(){
+            //         formatminutes();
+            //     });
+            // }
+            ,done:function (value) {
+                if(date.length!=0){
+                    date=[];
+                }
+                date.push(value);
+            }
+        });
+
+        laydate.render({
+            elem:'#btime'
+            ,type:'datetime'
+            ,format:'yyyy/MM/dd HH:mm'
+            ,mark:dobj
+            ,trigger:'click'
+            ,ready:function () {
+                var timeDom = $('#layui-laydate2').find("span[lay-type='datetime']")[0];
+                $(timeDom).click(function(){
+                    formatminutes();
+                });
+            }
+            ,done:function (value) {
+                let turn = new Date(value);
+                $('#nowday').val(turn.format('Y/m/d'));
+               btime = value;
+            }
+        });
+        laydate.render({
+            elem:'#etime'
+            ,type:'datetime'
+            ,format:'yyyy/MM/dd HH:mm'
+            ,mark:dobj
+            ,trigger:'click'
+            ,ready:function () {
+                var timeDom = $('#layui-laydate3').find("span[lay-type='datetime']")[0];
+                $(timeDom).click(function(){
+                    formatminutes();
+                });
+            }
+            ,done:function (value) {
+                let bdate = new Date(btime).format('Y-m-d H:i:s');
+                let edate = new Date(value).format('Y-m-d H:i:s');
+                let bhour = new Date(btime).getHours();
+                let bgtime = new Date(btime).getTime();
+                let ehour = new Date(value).getHours();
+                let egtime = new Date(value).getTime();
+
+                 let min = '';
+                 let hour = '';
+                 let bjegtime = egtime-bgtime;//獲得兩個時間差，單位毫秒
+                 let emin = new Date(value).getMinutes()  ;
+
+                if(edate<bdate){
+                    layer.msg('截止時間不可小於開始時間',function () {
+                        $('#etime').val('');
+                    });
+                }
+
+                if( (bhour===12&&ehour===13) ||(ehour===12&&bhour===13) ){
+                        layer.msg('改時間段為休息時間段，請確認後填寫',function () {
+                        $('#etime').val('');
+                        $('#btime').val('');
+                        $('#rthour').val('')
+                    })
+                }else if(ehour===17&&emin<40){
+                    // layer.msg('當前填寫時間段包含休息時間，請確認後填寫！',function () {
+                    //     $('#etime').val('');
+                    //     $('#btime').val('');
+                    //     $('#rthour').val('')
+                    // })
+                }
+
+                else if(bhour<12&&ehour>=17){
+                    hour= Math.floor((bjegtime-1000*60*40)/(1000*60*60 ) -1);
+                    min = ((bjegtime-1000*60*40)%(1000*60*60 ))/(60*1000) ;//獲取兩個時間之間的分鐘差（除去中午12-13和17-17:40這兩個休息時間）
+                    //console.log( typeof  min);
+                    if(min!==30&&min!==0){
+                        layer.msg('請假或者加班的最小單位為半個小時(0.5H)',{time:2800},function () {
+                            $('#etime').val('');
+                            $('#btime').val('');
+                            $('#rthour').val('')
+                        })
+                    }else{
+                        if(min===30)
+                        {
+                            hour = hour+0.5;
+                            //console.log(hour);
+                            $('#rthour').val(hour)
+                        }
+                        else{
+                            $('#rthour').val(hour)
+                        }
+                    }
+                }else if(bhour<12&&ehour<17&&ehour>13){
+
+                   hour =  Math.floor(bjegtime/(1000*60*60)-1);
+                   min = (bjegtime%(1000*60*60 ))/(60*1000);
+                    if(min!==30&&min!==0){
+                        layer.msg('請假或者加班的最小單位為半個小時(0.5H)',{time:2800},function () {
+                            $('#etime').val('');
+                            $('#btime').val('');
+                            $('#rthour').val('')
+                        });
+                    }else{
+                        if(min===30)
+                        {
+                            hour = hour+0.5;
+                            //console.log(hour);
+                            $('#rthour').val(hour)
+                        }else{
+                            $('#rthour').val(hour)
+                        }
+                    }
+
+                }
+
+            else{
+                    hour =  Math.floor(bjegtime/(1000*60*60)-1);
+                    min = (bjegtime%(1000*60*60 ))/(60*1000);
+                    if(min!==30&&min!==0){
+                        layer.msg('請假或者加班的最小單位為半個小時(0.5H)',{time:2800},function () {
+                            $('#etime').val('');
+                            $('#btime').val('');
+                            $('#rthour').val('')
+                        });
+                    }else{
+                        if(min===30)
+                        {
+                            hour = hour+0.5;
+                            //console.log(hour);
+                            $('#rthour').val(hour)
+                        }else{
+                            $('#rthour').val(hour)
+                        }
+                    }
+                }
+
+            }
+        });
+        form.on('submit(submit)',function (data) {
+            //console.log(data.field);
+            let dfdata = data.field;
+            // console.log(dfdata);
+            window.fdata = dfdata;
+
+            layer.ready(function () {
+                layer.open({
+                    type:2,
+                    title:'填单确认',
+                    maxmin:true,
+                    shadeClose:true,
+                    area:['1200px','250px'],
+                    content:"{:url('eform/hoverconfirm')}",
+                    btn: ['确定','关闭'],
+                    yes:function (index) {
+                        let res = window["layui-layer-iframe" + index].callbackdata();
+                        // console.log(res);
+                        if(res) {
+                            $.ajax({
+
+                                url:'{:url("Eform/hoverdata")}',
+                                dataType:'json',
+                                data:{data:res},
+                                type:'post',
+                                success:function (msg) {
+                                    console.log(  msg);
+                                    if(msg==1){
+                                        layer.msg('填写完成',{icon:6,shade:0.4},function () {
+                                            window.location.reload();
+                                        })
+                                    }
+
+                                },
+                                error:function (msg) {
+                                    console.log(msg);
+                                }
+                            })
+                        }
+
+
+
+                    }
+
+
+                })
+            });
+
+
+
+        })
+    })
+
+</script>
+</html>

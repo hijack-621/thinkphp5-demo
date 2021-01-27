@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-From</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/style1.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layout.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+</head>
+<style>
+    .view-product{
+        top:-5px;
+    }
+</style>
+<script src="__PUBLIC__/js/jquery.particleground.min.js" charset="utf-8"></script>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none;padding-left: 0">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exportlfm')}">請假<span class="layui-badge">{$lfm}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exportapp')}">預報<span class="layui-badge">{$app}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exporthover')}">例假<span class="layui-badge">{$hover}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exportnorm')}">平時<span class="layui-badge">{$norm}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exportbust')}">公出<span class="layui-badge">{$bust}</span></a>
+    </li>
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+
+<div class="view-body" style="margin-top: 15px">
+    <div class="view-sidebar" style="margin-top: 5px">
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">新填表單</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('Eform/leave_form')}" target="_blank">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/advanced_apply')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/holiday_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/normal_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/business_trip')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">表單導出</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/exportlfm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportapp')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exporthover')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportnorm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportbust')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">加班明細</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/details')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/jiaban.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">加班明細</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">人事变动</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/alteremp')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/yg.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">员工变动&加班指标</span>
+                        </a>
+                    </li>
+                   
+
+
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="view-product " style="overflow: hidden;background-color: #ccc">
+
+    </div>
+
+</div>
+
+</body>
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+
+        //…
+    });
+    $(document).ready(function(){
+        $('.view-product').particleground({
+            dotColor:'#0c75f7',
+            lineColor:'#0c75f7'
+        });
+
+
+    });
+    $(".sidebar-title").on('click', function() { //live 在  jq 1.9以上版本被废弃
+
+    
+       
+        if ($(this).parent(".sidebar-nav").hasClass("sidebar-nav-fold")) {
+            $(this).next().slideDown(200);
+            $(this).parent(".sidebar-nav").removeClass("sidebar-nav-fold");
+        } else {
+            $(this).next().slideUp(200);
+            $(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
+        }
+    });
+</script>
+</html>

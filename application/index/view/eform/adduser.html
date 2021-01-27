@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>ADD</title>
+</head>
+<link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+<style>
+    .layui-table{
+        text-align: center;
+    }
+    .layui-table th{
+        /*表头内容居中显示*/
+        text-align: center;
+    }
+</style>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        <button type="button" class="layui-btn layui-btn-sm" data-type="addRow" lay-event="add" title="添加一行">
+            <i class="layui-icon layui-icon-add-1"></i> 添加一行
+        </button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<body>
+<div style="width: 990px;margin-left: auto;margin-right: auto;margin-top: 15px"  >
+
+    <table id="cmtab"  lay-filter="cmtab">
+    </table>
+
+</div>
+</body>
+<script type="text/javascript">
+    let rdata= [];
+    let ftb = '';
+    let tableid = '';
+    window.viewObj = {
+        tbData: [{
+            tempId: new Date().valueOf(),
+            name: '',
+            job_id: '',
+            deptname: '',
+            deptcode:'',
+            total:'',
+        }],
+    };
+    //fdata[0] = parent.fdata;//格式必须要正确
+
+    layui.use(['table','layer'],function () {
+             ftb = layui.table;
+             tableid = 'cmtab';
+                ftb.render({
+                    elem:'#cmtab'
+                    ,ID:'cmtab'
+                    ,toolbar: '#toolbar'
+                    ,defaultToolbar: []
+                    ,cols:[[
+                        {field: 'id',title: '序号', type: 'numbers'},
+                        {field: 'name',  title:'姓名',edit:'text'},
+                        {field: 'job_id',   title:'工號',edit:'text'},
+                        {field: 'deptname',   title:'部門',edit:'text'},
+                        {field: 'deptcode',   title:'部門代號',edit:'text'},
+                        {field: 'total',   title:'分配加班時數',edit:'text'},
+                        { title:'操作', toolbar: '#barDemo', width:70}
+                    ]]
+                     ,data: viewObj.tbData
+                    ,text:{
+                        none:'無數據'
+                    }
+                    ,page:true
+                });
+        let active = {
+            addRow: function(){	//添加一行
+                var oldData = ftb.cache[tableid];
+                console.log(oldData);
+                var newRow = {tempId: new Date().valueOf(),name:'', job_id: '', deptname: '',deptcode:'', total: ''};
+                oldData.push(newRow);
+                ftb.reload('cmtab',{
+                    data : oldData
+                });
+            },
+            updateRow: function(obj){
+                var oldData = ftb.cache[tableid];
+                console.log(oldData);
+                for(var i=0, row; i < oldData.length; i++){
+                    row = oldData[i];
+                    if(row.tempId == obj.tempId){
+                        $.extend(oldData[i], obj);
+                        return;
+                    }
+                }
+                ftb.reload('cmtab',{
+                    data : oldData
+                });
+            },
+            removeEmptyTableCache: function(){
+                var oldData = ftb.cache[tableid];
+                for(var i=0, row; i < oldData.length; i++){
+                    row = oldData[i];
+                    if(!row || !row.tempId){
+                        oldData.splice(i, 1);    //删除一项
+                    }
+                    continue;
+                }
+                ftb.reload('cmtab',{
+                    data : oldData
+                });
+            },
+            save: function(){
+                var oldData = table.cache[tableid];
+                console.log(oldData);
+                for(var i=0, row; i < oldData.length; i++){
+                    row = oldData[i];
+                    if(!row.type){
+                        layer.msg("检查每一行，请选择分类！", { icon: 5 }); //提示
+                        return;
+                    }
+                }
+                document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache['cmtab'], null, 2);	//使用JSON.stringify() 格式化输出JSON字符串
+                }
+            };
+
+        let activeByType = function (type, arg) {
+            if(arguments.length === 2){
+                     active[type] ? active[type].call(this, arg) : '';
+                }
+                else{
+                    active[type] ? active[type].call(this) : '';
+                    }
+            };
+
+        //监听表格行单元格工具事件
+        ftb.on('tool(exptab)',function (obj) {
+            let data = obj.data;
+            // console.log(data.id);
+            let gh = "{$Think.session.employee_id}";
+            let dflag = "{$Think.session.pexport}";
+            if(obj.event==='del'){
+                layer.confirm('真的删除这一行么？',function (index) {
+                    if(dflag==1||data.job_id == gh){
+                        obj.del();
+                        $.ajax({
+                            url:'{:url("eform/delete")}',
+                            type:'post',
+                            dataType:'json',
+                            data:{id:data.id,table:'think_afm'},
+                            success:function(msg){
+                                console.log(msg);
+                            },
+                            error:function(emsg){
+                                console.log(emsg);
+                            }
+                        });
+                        layer.close(index);
+                    }
+                    else  if(data.job_id !== gh && dflag==0 ){
+                        layer.msg('非管理員只允許刪除有關自己的數據');
+                        return '';
+
+                    }
+
+                });
+
+
+            }
+
+        });
+
+        ftb.on('toolbar(cmtab)',function (obj) {
+                    // layer1.msg('1111');
+                    let event = obj.event;
+                    if(event==='add'){
+
+                            let type = $(this).data('type');
+                            activeByType(type);
+
+                    }
+                });
+        // ftb.on('edit(cmtab)',function (obj) {
+        //     let val = obj.value;
+        //     let data = obj.data;
+        //     let field = obj.field;
+        //     console.log(val);
+        //     console.log(data);
+        //     console.log(field);
+        // })
+        //
+
+    });
+
+
+
+
+
+    // function jump() {
+    //     let index = parent.layer.getFrameIndex(window.name);
+    //     parent.layer.close(index);//关闭当前页
+    // }
+
+    function callbackdata() {
+
+          rdata =  ftb.cache[tableid];
+          return rdata;
+
+
+    }
+
+</script>
+
+</html>

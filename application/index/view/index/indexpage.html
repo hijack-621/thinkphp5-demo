@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>soft_Index</title>
+<link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+<link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+<link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+
+</head>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('index/signinfo')}">进行中<span class="layui-badge">{$pend}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('index/endsigninfo')}">已签核<span class="layui-badge">{$welldone}</span></a>
+    </li>
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+    <li class="layui-nav-item" >
+        <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+        <dl class="layui-nav-child">
+            <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+            <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+            <dd><a href="{:url('index/login')}">退了</a></dd>
+        </dl>
+    </li>
+    </ul>
+</ul>
+
+    <div class="container" style="margin-top: 100px;text-align: center;">
+        <div style="margin-top: -50px">
+        <div class="row" id="row0" style="text-align: center;margin-left: auto;margin-right: auto">
+
+                <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle">
+                    <a href="../itform/add.html" id="a1" >
+                        <i class="layui-icon layui-icon-tabs" style="font-size: 100px"></i>
+                    <p>专案管理</p>
+                    </a>
+                </div>
+
+
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-icon-log" style="font-size: 100px"></i>
+                <p>工作日志</p>
+            </a></div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-icon-group" style="font-size: 100px"></i>
+                <p>人员培训</p>
+            </a></div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-icon-top" style="font-size: 100px"></i>
+                <p>人员成长</p>
+            </a></div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-icon-form" style="font-size: 100px"></i>
+                <p>工作执掌</p>
+            </a></div>
+            <div class="col-md-2" style="padding-left: 0;text-align: center;vertical-align: middle"> <a href="#">
+                <i class="layui-icon layui-anim layui-anim-rotate layui-anim-loop layui-icon-loading-1" style="font-size: 100px"></i>
+                <p>Coming soon</p>
+            </a></div>
+        </div>
+
+        <div class="row" style="margin-top: 5px;text-align: center;margin-left: auto;margin-right: auto" id="row2">
+            <div class="col-md-4">
+                <a href="#" style="background-color: orange">
+                    <!--<i class="layui-icon layui-icon-login-qq" style="font-size: 100px"></i>-->
+                    <!--<p>新增表单</p>-->
+                </a>
+                <div  id="a2">
+                    <div class="row" id="row3">
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-praise" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-tread" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <a href="#" style="background-color: orange">
+                    <!--<i class="layui-icon layui-icon-login-qq" style="font-size: 100px"></i>-->
+                    <!--<p>新增表单</p>-->
+                </a>
+                <div  id="a2">
+                    <div class="row" id="row3">
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-praise" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a>
+                                <!--<i class="layui-icon layui-icon-tread" style="font-size: 100px" ></i>-->
+                                <!--<p>新增表单</p>-->
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-4" style="background-color: purple;position: relative" id="d3">
+                <div class="d">
+                    <div class="d4">
+                        <!--<i class="layui-icon layui-icon-windows" style="font-size: 100px" ></i>-->
+                    </div>
+                    <div class="d6">
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+                        <div style="height: 80px;width: 100%;text-align: center!important;position: relative;margin-top: 5px;float: top">
+                            <div class="da2">
+                                <!--<span class="btn btn-primary da2span">0</span>-->
+                            </div>
+                        </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript">
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+
+        //…
+    });
+</script>
+</html>

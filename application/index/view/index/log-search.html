@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LOG-SEARCH</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/date.format.js"></script>
+</head>
+<style>
+    .layui-form-checkbox i{
+        height: 30px!important;
+    }
+
+    .layui-unselect layui-form-select
+    {
+        line-height: 20px;
+    }
+    .tac{
+
+    }
+    .attach1{
+        float: none!important;
+        margin-right: 0!important;
+    }
+    .bk1{
+
+    }
+    @media screen and (max-width: 662px) {
+
+        .attach1{
+            display: none!important;
+        }
+        .layui-col-md3::before{
+            content: '分辨率太低啦！，请换设备';
+        }
+
+    }
+    @media screen and (max-width: 1240px) {
+
+        .attach1{
+            float: left!important;
+        }
+        .layui-input-inline{
+            width: auto!important;
+        }
+
+    }
+
+    @media screen and (min-width: 1250px) {
+
+        .attach1{
+            float: left!important;
+        }
+        .bk1{
+            display: none!important;
+        }
+    }
+
+</style>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<blockquote class="layui-elem-quote layui-quote-nm" style="text-align: center">LOG REPORT</blockquote>
+    <div class="layui-container" style="height:100px">
+        <div class="layui-row">
+            <form class="layui-form" action="">
+
+                <div class="layui-form-item" style="text-align: center" >
+
+                    <div class="layui-row">
+                        <div class="layui-col-md3 tac" >
+                            <div class="layui-input-inline attach1" style="margin-left: 15px!important;"   >
+                                <!--class="layui-input-inline"允许多个表单控件占一行，横着，一行可以放置多个表单元素-->
+                                <select name="TPR" >
+                                    <option value=""></option>
+                                    <option value="tnb" selected>TNB</option>
+                                    <!-- <option value="CEB">CEB</option>
+                                    <option value="CEP">CEP</option>
+                                    <option value="IGS">IGS</option>
+                                    <option value="CTS">CSAT</option>
+                                    <option value="TSI">TSI</option> -->
+                                </select>
+                            </div>
+
+                            <!--<div class="layui-input-inline attach1 visible-sm " style="float: left;">-->
+
+                                <!--<input type="checkbox" name="PM" title="PM" style="overflow: hidden;" class="bk1" />-->
+                            <!--</div>-->
+
+                            <div class="layui-inline attach1 visible-sm visible-xs" style="">
+                                <label class="layui-form-label" style="">日期</label>
+                                <div class="layui-input-inline attach1">
+                                    <input type="text" class="layui-input" id="test110" placeholder=" - " style="">
+                                </div>
+                            </div>
+
+                            <div class="layui-input-inline attach1 visible-sm visible-xs" style="">
+                                <div class="layui-btn-group" >
+                                    <button type="button" class="layui-btn">Search</button>
+                                    <button type="button" class="layui-btn ">Save</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-col-md3 tac hidden-sm hidden-xs">
+                            <div class="layui-input-inline attach1" style="float: left;margin-left: 15px!important;">
+                                <select name="Model" id="Model" lay-search="" >
+                                    <option value="pcm" >Pls Choose Model</option>
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="layui-col-md3 tac hidden-sm hidden-xs">
+                            <div class="layui-inline attach1" style="width: 280px;margin-left: -40px!important;">
+                                    <label class="layui-form-label" style="">日期</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" id="test10" placeholder="请输入日期范围" autocomplete="off" style="">
+                                    </div>
+                            </div>
+
+                        </div >
+                        <div class="layui-col-md3 tac hidden-sm hidden-xs" style="margin-left: -10px!important;">
+                            <div class="layui-input-inline attach1" style="">
+                                <div class="layui-btn-group" style="margin-right: 0!important;" >
+                                    <button  class="layui-btn" lay-submit lay-filter="search" data-type="reload" id="searchlog" style="" >Search</button>
+                                    <button type="button" class="layui-btn" id="export" style="margin-left: 14px!important;">Save</button>
+                                </div>
+                            </div>
+                            <div style="width: 125px;margin-left: 165px">
+                            <button type="button" class="layui-btn" id="download" ><a href="{:url('index/sdlog')}" style="text-decoration: none;color:white" target="_blank">Download</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </form>
+
+    </div>
+    </div>
+<div style="width: 1050px;margin-left: 50%;transform: translateX(-50%);margin-top: 25px">
+    <table  id="logtable"  style="margin-left: auto;margin-right: auto" lay-filter="logtable">
+
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+    layui.use('form',function () {
+        let form = layui.form;
+        jQuery(document).ready(function () {
+            $.ajax({
+                url:'{:url("itform/getModel")}',
+                data:{},
+                dataType: 'json',
+                type:'post',
+                success:function (msg) {
+                    console.log(msg);
+                    // let tmp = [];
+                    // tmp.push(msg[0]['Model']);
+                    // // console.log(tmp);
+                    // for(let i=1;i<msg.length;i++){
+                    //     if(msg[i]['Model']!=tmp[0]){
+                    //         tmp.push(msg[i]['msg']);
+                    //     }
+                    // }
+                    //console.log(tmp);
+                    for(let j=0;j<msg.length;j++){
+
+                        $('#Model').append(new Option(msg[j]['Model'],msg[j]['Model']));
+
+                    }
+                    form.render('select')
+
+
+                }
+
+
+            })
+
+        });
+    });
+
+
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+        //…
+    });
+    let nowdate = new Date().format('Y-m-d');
+    let dobj = {};
+    dobj[nowdate] = '';
+    let tdata  = [];
+    console.log(tdata);
+
+    //console.log(nowdate);
+
+    layui.use(['form', 'laydate','table','layer'], function(){
+        let form  = layui.form;
+        let laydate = layui.laydate;
+        let date = '';
+        let table = layui.table;
+        laydate.render({
+            elem: '#test10'
+            ,type: 'datetime'
+            ,range: true
+            ,format:'yyyy/MM/dd'
+            ,mark:dobj
+            ,done:function (value) {
+                date=value;
+               // console.log(date);
+            }
+
+        });
+        table.render({
+            elem: '#logtable'
+            ,height: 312
+            ,title:'log_report'//导出文件么设置了title属性的话文件么默认是title
+            ,page: true //开启分页
+            ,data:tdata
+            ,id:'logtable'
+            ,cols: [[ //表头
+                {field: 'TPR', title: 'TPR',}
+                ,{field: 'SN', title: 'SN', width:220 }
+                ,{field: 'Station', title: 'Station',}
+                ,{field: 'Date', title: 'Date', }
+                ,{field: 'model', title: 'Model', }
+                ,{field: 'pn', title: 'PN', }
+
+            ]]
+            ,text:{
+                none:'无数据'
+            }
+        });
+        form.on('submit(search)',function (data) {
+             console.log(data.field);
+             //console.log(date);
+
+            let col = [];
+            $.ajax({
+               url:'{:url("itform/log_search")}',
+               type:'post',
+               dataType:'json',
+               data:{data:data.field,date:date},
+                success:function (msg) {
+                    console.log(msg);
+                    //console.log(111);
+                    if(msg.length>0){
+                        tdata = msg;
+                        for(let key in msg[0]){
+                            col.push({'field':key,title:key,});
+                        }
+                        console.log(col);
+                        table.reload('logtable',{
+                            data:tdata
+                        })
+
+
+                    }else{
+                        table.reload('logtable',{
+                            data:tdata,
+                            text:{
+                                none:'查无符合条件的数据！'
+                            }
+                        })
+
+                    }
+                    
+
+                },
+                error:function (msg) {
+                    console.log(msg);
+                }
+            });
+            // if(date==''){
+            //
+            // }
+            return false;
+        });
+        
+        $('#export').click(function () {
+          // console.log(tdata);
+            if(tdata.length==0){
+                layer.msg('无数据可导出');
+                return false;
+            }else{
+                table.exportFile('logtable',tdata,'xls','log_report');
+            }
+
+            // $.ajax({
+            //
+            // })
+        })
+    });
+    
+    
+
+</script>
+</html>

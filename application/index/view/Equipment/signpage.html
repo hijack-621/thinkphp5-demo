@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校验签核</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/vue.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/vue-resource.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/vue-router.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<style>
+   .layui-table-header table thead th {
+        background-color:#F4987F;
+   }
+   #app table th{
+       font-size:14px;
+       font-weight:110;
+   }
+   #app a{
+       color:blue;
+     
+   }
+   [v-cloak] { display: none!important;}
+</style>
+<body style="background-color: #ccc;">
+    <ul class="layui-nav" lay-filter="">
+
+        <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+    
+        <li class="layui-nav-item">
+            <a href="{:url('Equipment/pendlist')}" >未结案清单<span class="layui-badge">{$pcount}</span></a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="{:url('Equipment/pendlist')}">已结案清单<span class="layui-badge">{$ocount}</span></a>
+        </li>
+    
+        <ul class="layui-nav layui-layout-right" lay-filter="">
+            <li class="layui-nav-item" >
+                <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="{:url('index/login')}">退了</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </ul>
+   
+    <div style="width: 1155px;margin-left: 50%;transform: translateX(-50%);margin-top: 50px;">
+        <table id='info'></table>
+    </div>
+
+    <div id="app" style="width: 1155px;margin-left: 50%;transform: translateX(-50%);margin-top: 100px;background-color: rgb(196, 84, 84);height: 200px;">
+        <table class="table table-bordered table-condensed" style="margin-top:100px;text-align:center; background-color:#FFF;height: 250px;" id="step-tb">
+            <tbody>
+            <tr style="background-color:#F4987F">
+                <th>Actvity</th>
+                <th>Attach</th>
+                <th>Begingtime</th>
+                <th>Owner</th>
+                <th>remark</th>
+                <th>Endtime</th>
+                <th>Status</th>
+            </tr>
+            <tr >
+                <td style='border-right: 0px;' colspan="1">仪器校验流程</td>
+            </tr>
+            <tr>
+                <td>仪器负责人拿到仪器签字后拍照上传到系统</td>
+                <td></td>
+                <td v-cloak>{{ arr.itime}}</td>
+                <td v-cloak><a href="javascript:void(0)" @click="poplayer(arr.custodian,arr.id)">{{ arr.custodian}}</a></td>
+                <td v-cloak>{{ arr.memo1==''||arr.memo1==null ? '' : arr.memo1}}</td>
+                <td v-cloak>{{ arr.etime==''||arr.etime==null ? '' : arr.etime}}</td>
+                <td v-cloak>{{ arr.step1==0||arr.step1==undefined||arr.step1=='' ? '待签核' : '签核完毕'}}</td>
+            </tr>
+            <tr>
+                <td>校验完毕并且通知保管人取仪器并签字上传系统</td>
+                <td></td>
+                <td v-cloak>{{  arr.itime2==''||arr.itime2==null ? '' : arr.itime2}}</td>
+                <td v-cloak><a href="javascript:void(0)" @click="poplayer(arr.incharge,arr.id)">{{ arr.incharge}}</a></td>
+                <td v-cloak>{{ arr.memo2==''||arr.memo2==null ? '' : arr.memo2}}</td>
+                <td v-cloak>{{ arr.etime2==''||arr.etime2==null ? '' : arr.etime2}}</td>
+                <td v-cloak>{{ arr.step2==0||arr.step2==undefined||arr.step2=='' ? '待签核' : '签核完毕'}}</td>
+            </tr>
+            </tbody>
+            </table>
+    </div>
+
+</body>
+<script>
+    Vue.config.devtools = true;
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+    });
+    let urlparam = window.location.search.substr(1).split('=');
+
+    layui.use('table',function(){
+        let table = layui.table;
+        table.render({
+            elem:'#info',
+            url:'{:url("Equipment/getinfobyid")}',
+            where:{id:urlparam[1]},
+            cols: [[
+            {field: 'name',  title: '儀器名稱',edit:'text' },
+            {field: 'model',  title: '型号',edit:'text' },
+            {field: 'brand',  title: '厂牌',edit:'text' },
+            {field: 'plant',  title: '厂区',edit:'text' },
+            {field: 'dept',  title: '部门',edit:'text' },
+            {field: 'checktype',  title: '校验性质',edit:'text' },
+            {field: 'custodian',  title: '保管人',edit:'text' },
+            {field: 'incharge',  title: '负责人',edit:'text' },
+            {field: 'director1',  title: '保管人主管',edit:'text' },
+            {field: 'checkdata',  title: '校验日期',edit:'text' },
+            ]],
+            skin:'nob',
+        })
+    })
+    
+
+    
+
+    let vm = new Vue({
+        el:'#app',
+        data:{
+            arr:{},
+        },
+        created() {
+            this.getinfo()
+        },
+        // watch:{
+        //     'arr':function(newval,oldval){
+                
+        //     }
+        // },
+        methods:{
+            async  getinfo(){
+                await  axios({
+                    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                    method:'post',
+                    url:'{:url("Equipment/getinfobyid")}',
+                    params:{id:urlparam[1]},
+                }).then(res=>{ //这里必须用箭头函数 
+                       if(res.data.code==0){
+                         this.arr = res.data.data[0]
+                         console.log(this.arr)
+                       }
+                    })
+            },
+            poplayer(e,f){
+                window.p = e;
+                window.id = f;
+                layui.use('layer', function(){
+                    let layer = layui.layer
+                    layer.ready(function () {
+                        layer.open({
+                            type: 2,
+                            title: '校验流程签核',
+                            maxmin: true,
+                            shadeClose: true,
+                            area: ['900px', '350px'],
+                            content: "{:url('equipment/popsignlayer')}",
+                            btn: ['確定', '关闭'],
+                            yes: function (index,layero) {
+                                
+                                let body = layer.getChildFrame('body',index)
+                                let t  =body.find('textarea').val() //memo val
+                                let src = '/tp5/public/static/'+'/epimgs'+'/'+f+'/'+e+'.jpg'
+                               // window.
+                                //console.log(src)
+
+                            }
+
+
+                        })
+
+                    })
+                    
+                })
+            }
+        },
+
+    })
+    
+</script>
+</html>

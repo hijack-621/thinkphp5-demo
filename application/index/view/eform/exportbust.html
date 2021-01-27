@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公出單登記表單導出</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/style1.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layout.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/lfmpage.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui_global.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script src="__PUBLIC__/js/jquery.particleground.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/date.format.js" charset="utf-8"></script>
+</head>
+<style>
+    .bg{
+        background-color: #ffffff;
+        width: 95%;
+        height: 420px;
+        position: absolute;
+        border:1px solid #fff;
+        border-radius:3px;
+        padding:14px 20px;
+        box-shadow:0 0 8px #eeeeee;
+        left:50%;
+        top:10%;
+        transform: translateX(-50%);
+    }
+    .layui-table-view {
+
+    }
+    .layui-table th{
+        text-align: center;
+    }
+    .layui-table tr td{
+        text-align: center;
+    }
+</style>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+
+        <button class="layui-btn layui-btn-sm" lay-event="isAll">查看歷史數據</button>
+    </div>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none;padding-left: 0">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="#"></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exportapp')}" >預報<span class="layui-badge">{$app}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exporthover')}">例假<span class="layui-badge">{$hover}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('Eform/exportnorm')}">平時<span class="layui-badge">{$norm}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="javascript:void(0)" onclick="reload()">公出<span class="layui-badge">{$bust}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('eform/exportlfm')}">请假<span class="layui-badge">{$lfm}</span></a>
+    </li>
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <dd><a href="{:url('index/index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+
+<div class="view-body" style="margin-top: 15px">
+    <div class="view-sidebar" style="margin-top: 5px">
+        <div class="sidebar-content">
+            <div class="sidebar-nav  ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">新填表單</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('Eform/leave_form')}" onclick="reload()">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/advanced_apply')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/holiday_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/normal_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/business_trip')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">表單导出</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="">
+                    <li>
+                        <a href="{:url('eform/exportlfm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportapp')}">
+
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exporthover')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportnorm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" onclick="reload()">
+
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">加班明細</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/details')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/jiaban.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">加班明細</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">人事变动</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/alteremp')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/yg.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">员工变动&加班指标</span>
+                        </a>
+                    </li>
+                   
+
+
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="view-product " style="overflow: hidden;background-color: #CCC">
+
+        <div class="formcontent" style="position: absolute">
+            <div class="bg">
+                <div class="site-title">
+                    <fieldset>
+                        <legend>
+                            <a name="input">公出單導出</a>
+                        </legend>
+                    </fieldset>
+                </div>
+                <table class="layui-hide" id="exptab" lay-filter="exptab"></table>
+                <!--<table class="layui-table" lay-data="{width:1050,height:300, url:'/tp5/index/eform/edata', page:true, id:'etable', skin:'row', even:true }" style="">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th lay-data="{field:'job_id', }">工号</th>-->
+                <!--<th lay-data="{field:'dept_no', }">部门代号</th>-->
+                <!--<th lay-data="{field:'name',}">姓名</th>-->
+                <!--<th lay-data="{field:'begin_time' , }">起始时间</th>-->
+                <!--<th lay-data="{field:'end_time' , }">截止时间</th>-->
+                <!--<th lay-data="{field:'lday'  ,style:'background-color: #009688; color: #fff'}">天数</th>-->
+                <!--<th lay-data="{field:'lhour'  , style:'background-color: #009688; color: #fff;'}">请假时数</th>-->
+                <!--<th lay-data="{field:'reason'  , width:100 ,style:'background-color: #009688; color: #fff;'}">请假事由</th>-->
+                <!--<th lay-data="{field:'htype'  , width:100 ,style:'background-color: #009688; color: #fff;'}">假别</th>-->
+                <!--<th lay-data="{field:'project_no'  , width:100 ,style:'background-color: #009688; color: #fff;'}">专案代号</th>-->
+
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--</table>-->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+    function reload() {
+        window.location.reload();
+    }
+
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+    });
+
+    $(document).ready(function(){
+        $('.view-product').particleground({
+            dotColor:'#0c75f7',
+            lineColor:'#0c75f7'
+        });
+
+        $(".sidebar-title").parent(".sidebar-nav").addClass("sidebar-nav-fold");
+
+        let nowtime = new Date().format('Y/m/d H:i:s');
+        //console.log(nowtime);
+        $('#filltime').val(nowtime);
+
+        layui.use(['form', 'laydate','layer','table'],function () {
+            let tab = layui.table;
+            let layer = layui.layer;
+            tab.render({
+                elem:'#exptab'
+                ,url:'/tp5/index/eform/ebustdata'
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,defaultToolbar: [{ //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '導出'
+                    ,layEvent: 'exports'
+                    ,icon: 'layui-icon-export'
+                    
+                },'print']
+                ,title: '公出單'
+                ,limits:[50,100]//分页
+                ,limt:50
+                ,cols: [[
+                    {field: 'id' ,title:'ID',hide:true},
+                    {field: 'job_id' ,title:'工號',width:100},
+                    {field: 'dept_no',  title:'部門代號',width:120},
+                    {field: 'name',   title:'姓名',width:80,},
+                    {field: 'bdate',   title:'公出日期',width:110,edit:'text'},
+                    {field: 'begin_time',title:'起始時間',width:160,edit:'text'},
+                    {field: 'end_time', title:'截止時間',width:160,edit:'text'},
+                    {field: 'bday', title:'公出天數',width:100,edit:'text'},
+                    {field: 'bthour', title:'公出時數',width:100,edit:'text'},
+                    {field: 'baddress', title:'公出地址',edit:'text'},
+                    {field: 'breason', title:'公出事由',edit:'text'},
+                    { title:'操作', toolbar: '#barDemo', width:70}
+                ]]
+                ,page: true
+                ,height:350
+                ,text:{
+                    none:'今天还没有人填写表單！'
+                }
+                ,parseData:function(res){
+                   
+                }
+            });
+            //监听表格行工具事件
+            tab.on('tool(exptab)',function (obj) {
+                let data = obj.data;
+                let gh = "{$Think.session.employee_id}";
+                let dflag = "{$Think.session.pexport}";
+                if(obj.event==='del'){
+                    layer.confirm('真的删除这一行么？',function (index) {
+                        if(dflag==1||data.job_id == gh){
+                            obj.del();
+                            $.ajax({
+                                url:'{:url("eform/delete")}',
+                                type:'post',
+                                dataType:'json',
+                                data:{id:data.id,table:'think_bfm'},
+                                success:function(msg){
+                                    console.log(msg);
+                                },
+                                error:function(emsg){
+                                    console.log(emsg);
+                                }
+                            });
+                            layer.close(index);
+                        }
+                      else  if(data.job_id !== gh && dflag==0 ){
+                            layer.msg('非管理員只允許刪除有關自己的數據');
+                            return '';
+
+                        }
+                    });
+                }
+                //console.log(data);  点击哪一行的btn 就打印哪一行所有的数据
+            })
+            tab.on('toolbar(exptab)',function (obj) {
+                let data = tab.cache.exptab;
+                let id=[];
+                for(let i=0;i<data.length;i++){
+                    id.push(data[i]['id']);
+                }
+                let pexport = "{$Think.session.pexport}";
+                if(obj.event==='exports'){
+                   
+                    if(pexport==0){
+                    layui.use('layer', function(){
+                        let lay = layui.layer;
+                        lay.msg('sorry,导出权限仅限管理员使用',{icon: 5,time:1000, shade:0.6},function () {
+                            return '';
+                        });
+
+
+                    });
+                }else{
+                    $.ajax({
+                        url:'{:url("eform/bustexport")}',
+                        type:'post',
+                        dataType:'json',
+                        data:{id:id},
+                        success:function (msg) {
+                            console.log(msg);
+                            if(msg[0]>0){
+                                layer.msg('導出成功！',{
+                                    icon: 1,
+                                    time:1500,
+                                },function () {
+                                    window.open(msg[1]);
+                                    tab.reload('exptab',{
+                                        text:{
+                                            none:'目前还没有人填写表單！'
+                                        }
+                                    })
+                                })
+
+                            }
+
+                        },
+                        error:function (emsg) {
+                            console.log(emsg);
+                        }
+                    });
+                }
+                   
+
+            }
+                else if(obj.event==='isAll'){
+                    tab.reload('exptab',{
+                        response:{
+                            statusCode:0
+                        }
+                        ,where:{table:'think_bfm'}
+                        ,url:'{:url("eform/showall")}'
+                        ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    });
+                }
+            })
+
+        });
+
+
+
+
+
+    });
+
+    $(".sidebar-title").on('click', function() { //live 在  jq 1.9以上版本被废弃
+        if ($(this).parent(".sidebar-nav").hasClass("sidebar-nav-fold")) {
+            $(this).next().slideDown(200);
+            $(this).parent(".sidebar-nav").removeClass("sidebar-nav-fold");
+        } else {
+            $(this).next().slideUp(200);
+            $(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
+        }
+    });
+
+
+</script>
+</html>

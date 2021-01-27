@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>signpage</title>
+</head>
+<link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+<link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+<link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/lay/modules/layer.js"></script>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('index/signinfo')}">进行中<span class="layui-badge">{$pend}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('index/endsigninfo')}">已签核<span class="layui-badge">{$welldone}</span></a>
+    </li>
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">我</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+    <div style="width: 1050px;margin-left: auto;margin-right: auto;margin-top: 100px">
+        <table lat-filter="mrtb" id="mrtb" >
+
+        </table>
+    </div>
+</body>
+<script type="text/html" id="">
+
+</script>
+<script type="text/javascript">
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+
+        //…
+    });
+    layui.use('table',function () {
+        let ltable = layui.table;
+
+    });
+    let id = window.location.search.substring(1);//获得去掉？号的参数
+    //console.log(url);
+
+    //let id = url.split('&')[1];
+    layui.use('table',function () {
+        let mrtable = layui.table;
+        mrtable.render({
+            elem: '#mrtb'
+            ,id:'mrtb'
+            ,height: 115
+            , width:1050
+            ,url:'/tp5/index/itform/signpage?id='+id
+            // ,where:{id:id}
+            ,cellMinWidth:100
+            ,cols:[[
+                {field: 'id' ,     title:'ID',sort:true},
+                {field: 'scheme',  title:'方案名',sort:true},
+                {field: 'title',   title:'部门',sort:true},
+                {field: 'password',title:'发起人',sort:true},
+                {field: 'rcheck', title:'目前签核',sort:true,templet:'#signlink'},
+                {field: 'echeck', title:'签核结果',sort:true,templet:'#signresult'},
+            ]],
+
+        });
+    });
+    function popsignlayer(check) {
+        //alert(this.id);
+        //alert('hello');
+        //console.log(id);
+        let id = window.location.search.substring(1);
+        window.check=check;
+        window.id=id;
+        layer.open({
+           type:2,
+           title:'专案签核',
+           maxmin:true,
+           shadeClose:true,
+           area:['550px','230px'],
+           content:"{:url('index/signlayer')}",
+           btn: ['确定','关闭'],
+           yes:function (index) {
+               let res = window["layui-layer-iframe" + index].callbackdata();
+
+               console.log(res);
+               $.ajax({
+                   type:'post',
+                   url:'{:url("itform/signresult")}',
+                   data:{id:id,res:res},
+                   dataType:'json',
+                   success:function (msg) {
+                       console.log(msg);
+                       if(msg){
+                           layer.close(index);
+                       }
+                   }
+               });
+               // if(res){
+               //     let mrtable = layui.table;
+               //     let data =mrtable.cache.mrtb;//layui table，获取table的全部数据，只需要一行代码即可： layui.table.cache.table    // table为id
+               //     console.log(data);
+               //
+               //     //console.log(data);
+               //         mrtable.render({
+               //         elem: '#mrtb'
+               //         ,id:'mrtb'
+               //         ,height: 115
+               //         , width:1050
+               //         ,cellMinWidth:100
+               //         ,url:'/tp5/index/itform/showsign?id='+id+'checker='+data[0]['rcheck']
+               //         ,cols:[[
+               //             {field: 'id' ,     title:'ID',sort:true},
+               //             {field: 'scheme',  title:'方案名',sort:true},
+               //             {field: 'title',   title:'部门',sort:true},
+               //             {field: 'password',title:'发起人',sort:true},
+               //             {field: 'rcheck', title:'目前签核',sort:true},
+               //             {field: 'echeck', title:'签核结果',sort:true,templet:'#signresult'},
+               //         ]]
+               //         // ,data:[{
+               //         //     'id':data[0].id
+               //         //     ,'scheme':data[0].scheme
+               //         //     ,'title':data[0].title
+               //         //     ,'password':data[0].password
+               //         //     ,'rcheck':data[0].rcheck
+               //         //     ,'echeck':res[0]+':'+res[1]
+               //         //
+               //         //
+               //         // }]
+               //     });
+               //     layer.close(index);
+               //
+               //
+               //
+               // }
+
+               //console.log(index);
+
+           }
+       });
+    }
+
+    // jQuery(document).ready(function($){
+    //     let url = window.location.search.substring(1);//获得去掉？号的参数
+    //     //console.log(url);
+    //     let checker = url.split('&')[0];
+    //
+    //     let id = url.split('&')[1];
+    //     let check = checker.split(',');
+    //     //console.log(id);
+    //     $.ajax({
+    //         type:'post',
+    //         url:'{:url("itform/signpage")}',
+    //         data:{id:id},
+    //         dataType:'json',
+    //         success:function(msg){
+    //             console.log(msg);
+    //         },
+    //         error:function(msg){
+    //             console.log(msg);
+    //         }
+    //
+    //
+    //     })
+    // });
+    // function getchildrenpagedata(data){
+    //     console.log(data);
+    //
+    // }
+</script>
+<script type="text/html" id="signlink">
+
+    <ul class="showImg">
+        {{#  for (var i=0,len=d.rcheck.split(',');i<len.length;i++){}}
+        <a class="layui-table-link" href="javascript:void(0)" onclick="popsignlayer(this.id)" id="{{len[i]}}">{{len[i]}}</a>
+
+
+        {{# }}}
+    </ul>
+
+
+
+</script>
+</html>

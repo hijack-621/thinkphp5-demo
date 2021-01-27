@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-From</title>
+    <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/style1.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layout.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/lfmpage.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/layui_global.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+    <script src="__PUBLIC__/js/jquery.particleground.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/date.format.js" charset="utf-8"></script>
+</head>
+<style>
+    .view-product{
+        top:-5px;
+    }
+    .bg{
+        background-color: #ffffff;
+        width: 76%;
+        height: 460px;
+        position: absolute;
+        border:1px solid #fff;
+        border-radius:3px;
+        padding:14px 20px;
+        box-shadow:0 0 8px #eeeeee;
+        left:50%;
+        top:1%;
+        transform: translateX(-50%);
+    }
+    .layui-table-view {
+
+    }
+    .layui-table th{
+        text-align: center;
+    }
+    .layui-table tr td{
+        text-align: center;
+    }
+    .layui-input::-webkit-input-placeholder{
+        text-align: center;
+    }
+    .laydate-btns-time{
+        display:none!important;
+    }
+</style>
+<script src="__PUBLIC__/js/jquery.particleground.min.js" charset="utf-8"></script>
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none;padding-left: 0">Compal SOD Software Management System</a></li>
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+
+<div class="view-body" style="margin-top: 15px">
+    <div class="view-sidebar" style="margin-top: 5px">
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">新填表單</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('Eform/leave_form')}" target="_blank">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/advanced_apply')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/holiday_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/normal_overtime')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('Eform/business_trip')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/alter.png" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+
+
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">表單导出</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="">
+                    <li>
+                        <a href="{:url('eform/exportlfm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">请假單</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" onclick="reload()">
+
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">預報假日出勤登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exporthover')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">例假加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportnorm')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">平時加班單登記表</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{:url('eform/exportbust')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/export.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">公出單登記表</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-nav ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">加班明細</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="">
+                    <li>
+                        <a href="{:url('eform/details')}">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/jiaban.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">加班明細</span>
+                        </a>
+                    </li>
+
+
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="sidebar-content">
+            <div class="sidebar-nav sidebar-nav-fold ">
+                <div class="sidebar-title">
+                    <a href="#">
+                        <span class="icon"><b class="fl icon-arrow-down"></b></span>
+                        <span class="text-normal">人事变动</span>
+                    </a>
+                </div>
+                <ul class="sidebar-trans" style="display: none">
+                    <li>
+                        <a href="{:url('eform/alteremp')}" target="_blank">
+                            <b class="sidebar-icon"><img src="__PUBLIC__/images/yg.jpg" width="16" height="16" /></b>
+                            <span class="text-normal">员工变动&加班指标</span>
+                        </a>
+                    </li>
+                   
+
+
+
+                </ul>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <div class="view-product " style="overflow: hidden;background-color: #F2F2F2">
+        <div class="formcontent" style="position: absolute">
+            <div class="bg">
+                <div class="site-title">
+                    <fieldset>
+                        <legend>
+                            <a name="input">加班時數查詢明細</a>
+                        </legend>
+                    </fieldset>
+                </div>
+                <div style="width: 100%">
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-inline" style="left: 50%;transform: translateX(-50%);margin-top:-15px ">
+                            <label class="layui-form-label">工號</label>
+                            <div class="layui-input-inline">
+                                <input class="layui-input" value="{$Think.session.employee_id}" name="id" style="text-align: center"/>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="rdate" id="betime" placeholder="请输入日期范围" autocomplete="off" style="">
+                            </div>
+                            <div class="layui-input-inline">
+                                <button class="layui-btn"  lay-submit lay-filter="search">明細查詢</button>
+                            </div>
+                            <div class="layui-input-inline" style="margin-left: -97px">
+                                <button class="layui-btn" lay-submit lay-filter="msearch"  >全員總數查詢(僅管理員使用)</button>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+
+                </form>
+                </div>
+                <div style="margin-top: 20px">
+                    <table class="layui-hide" id="total"  lay-filter="total"></table>
+                    <table class="layui-hide" id="detail" lay-filter="detail" ></table>
+                    <table class="layui-hide" id="showall" lay-filter="showall" ></table>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+<script>
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+        //…
+    });
+    $(document).ready(function(){
+        $('.view-product').particleground({
+            dotColor:'#12eeee',
+            lineColor:'#7ec7fd'
+        });
+
+
+        $(".sidebar-title").parent(".sidebar-nav").addClass("sidebar-nav-fold");
+
+        layui.use(['form', 'laydate','layer','table'],function () {
+            let username = "{$Think.session.employee_id}";
+            let form  = layui.form;
+            let layer = layui.layer;
+            let d = new Date();
+            let dobj = {};
+            let lmonth = d.getMonth();
+            let cmonth = d.getMonth()+1;
+            //console.log(cmonth);
+            let mark1 = '0'+'-'+cmonth+'-25';
+            let mark2 = '0'+'-'+lmonth+'-26';
+            console.log(mark1);
+            console.log(mark2);
+            dobj[mark1] = '';
+            dobj[mark2] = '';
+            if(username===''){
+                layer.msg('登錄信息已失效，請重新登錄！',{time:2000},function () {
+                    window.location.href='{:url("index/login")}'
+                });
+            }
+
+
+            let laydate = layui.laydate;
+            laydate.render({
+                elem: '#betime'
+                ,type: 'datetime'
+                ,range: true
+                ,format:'yyyy/MM/dd'
+                ,mark:dobj
+                ,done:function (value) {
+
+                    // console.log(date);
+                }
+
+            });
+
+            let tab = layui.table;
+            tab.render({
+                elem:'#total'
+                ,url:'{:url("eform/overtime_detail")}'
+                ,title:'加班時數'
+                ,cols:[
+                    [
+                        {field: 'total' ,title:'總時數',},
+                        {field: 'obilling',  title:'加班計費時數',},
+                        {field: 'off_day',   title:'加班計補休時數',},
+                        {field: 'nhour',   title:'平時總時數',},
+                        {field: 'hhour',   title:'例假總時數',},
+                        {field: 'nhhour',   title:'國假總時數',},
+
+                    ]
+                ]
+                ,text:{
+                    none:'无数据'
+                }
+
+            });
+
+            tab.render({
+                elem:'#detail'
+                ,url:'{:url("eform/list_detail")}'
+                ,title:'加班時數明細'
+                ,cols:[
+                    [
+                        {field: 'id' ,title:'工號',width:96},
+                        {field: 'nowday',  title:'加班歸屬日',width:110},
+                        {field: 'count',   title:'時數',width:70},
+                        {field: 'type',   title:'加班類型',width:100},
+                        {field: 'ctype',   title:'加班計算方式',width:130},
+                        {field: 'begin',   title:'開始時間',},
+                        {field: 'end',   title:'結束時間',},
+
+                    ]
+                ]
+                ,page:true
+                ,height:240
+                ,limit:4
+                ,parseData:function (res) {
+
+                    console.log(res.data);
+                    for(let i=0;i<res.data.length;i++){
+                        res.data[i]['begin'] = (new Date(res.data[i]['begin'])).format('Y-m-d H:i') ;
+                        res.data[i]['end'] = (new Date(res.data[i]['end'])).format('Y-m-d H:i') ;
+                    }
+                    return res;
+                }
+                ,text:{
+                    none:'无数据'
+                }
+            });
+
+            form.on('submit(search)',function (data) {
+                //console.log(data.field['rdate']);
+               // console.log(data.field['id']);
+                // tab.reload('exptab',{
+                //     response:{
+                //         statusCode:0
+                //     }
+                //     ,where:{table:'think_lfm'}
+                //     ,url:'{:url("eform/showall")}'
+                //     ,page: {
+                //         curr: 1 //重新从第 1 页开始
+                //     }
+                // });
+
+
+                if(data.field['rdate']!==''){
+                    tab.reload('total',{
+                        response:{
+                            statusCode:0
+                        }
+                        ,where:{date:data.field['rdate'],id:data.field['id']}
+                        ,url:'{:url("eform/search_detail")}'
+                        ,parseData:function (res) {
+                            //console.log(res.data)
+                        }
+                        ,text:{
+                                none:'查无数据'
+                            }
+
+                    });
+                    tab.reload('detail',{
+                        response:{
+                            statusCode:0
+                        }
+                        ,where:{date:data.field['rdate'],id:data.field['id']}
+                        ,url:'{:url("eform/search_list")}'
+                        ,page:{
+                            curr:1//重新从第 1 页开始
+                        }
+                        ,text:{
+                             none:'查无数据'
+                             }
+
+                    })
+                }else{
+                    layer.msg('请选择日期后在查询！',{time:1500})
+                }
+
+                return false;
+            });
+
+            form.on('submit(msearch)',function (data) {
+                    let pexport = "{$Think.session.pexport}";
+                    if(pexport==0){
+                        layui.use('layer', function(){
+                            let lay = layui.layer;
+                            lay.msg('sorry,权限仅限管理员',{icon: 5,time:1000, shade:0.6},function () {
+                                return '';
+                            });
+
+
+                        });
+                    }else{
+                        $('.layui-table-view').addClass('layui-hide');
+                        //return false;
+                            tab.render({
+                               elem:'#showall'
+                               ,url:'{:url("eform/allshow")}'
+                               ,title:'全員加班匯總'
+                               ,page:true
+                               ,height:310
+                               ,cols:[
+                                   [
+                                       {field: 'employee_id' ,title:'工號',},
+                                       {field: 'name' ,title:'姓名',},
+                                       {field: 'htotal' ,title:'例假計費時數',},
+                                       {field: 'ntotal' ,title:'平時計費時數',},
+                                       {field: 'ttotal',  title:'當月總計費時數',},
+                                       {field: 'stotal',  title:'當月部门分配總数',width:145},
+                                       {field: 'total',   title:'部門已用總數',},
+
+
+                                   ]
+                               ]
+
+                           });
+
+
+                    }
+
+                return false;
+            });
+
+
+
+
+
+        })
+
+
+
+    });
+    $(".sidebar-title").on('click', function() { //live 在  jq 1.9以上版本被废弃
+        if ($(this).parent(".sidebar-nav").hasClass("sidebar-nav-fold")) {
+            $(this).next().slideDown(200);
+            $(this).parent(".sidebar-nav").removeClass("sidebar-nav-fold");
+        } else {
+            $(this).next().slideUp(200);
+            $(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
+        }
+    });
+</script>
+</html>

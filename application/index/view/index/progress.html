@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>progress</title>
+</head>
+<link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
+<link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
+<link rel="stylesheet" href="__PUBLIC__/css/layui.css">
+<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+<script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
+<style type="text/css">
+
+    .time_line_box{
+        width: 900px;
+        position: relative;
+        height: 80px;
+        overflow: hidden;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-right: 0;
+        padding-left: 84px;
+    }
+    .time_line{
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 49px;
+        height: 2px;
+        background: #dfdfdf;
+        -webkit-transition: -webkit-transform 0.4s;
+        -moz-transition: -moz-transform 0.4s;
+        transition: transform 0.4s;
+    }
+    .order_item{
+        position: absolute;
+        bottom: 0;
+        z-index: 2;
+        text-align: center;
+        font-size: 15px;
+        padding-bottom: 15px;
+        color: #825FFB;
+    }
+    .order_item:after{
+        content: '';
+        position: absolute;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        bottom: -5px;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        border: 2px solid #dfdfdf;
+        background-color: #f8f8f8;
+    }
+    .selected:after{
+        background-color: mediumseagreen;
+        border-color: mediumseagreen;
+    }
+
+    .filling_line{
+        position: absolute;
+        padding: 0;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 85px;
+        background-color: mediumseagreen;
+        transform-origin: left center;
+        transition-property: transform;
+        transition-duration: 0.3s;
+        transition-timing-function: initial;
+        transition-delay: initial;
+        /*  可以写几个fill_line  进行到第几部就添加那个class！！！*/
+    }
+    .filling_line2{
+        position: absolute;
+        padding: 0;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 242px;
+        background-color: mediumseagreen;
+        transform-origin: left center;
+        transition-property: transform;
+        transition-duration: 0.3s;
+        transition-timing-function: initial;
+        transition-delay: initial;
+        /*  可以写几个fill_line  进行到第几部就添加那个class！！！*/
+    }
+    .filling_line3{
+        position: absolute;
+        padding: 0;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 372px;
+        background-color: mediumseagreen;
+        transform-origin: left center;
+        transition-property: transform;
+        transition-duration: 0.3s;
+        transition-timing-function: initial;
+        transition-delay: initial;
+        /*  可以写几个fill_line  进行到第几部就添加那个class！！！*/
+    }
+    .filling_line4{
+        position: absolute;
+        padding: 0;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 502px;
+        background-color: mediumseagreen;
+        transform-origin: left center;
+        transition-property: transform;
+        transition-duration: 0.3s;
+        transition-timing-function: initial;
+        transition-delay: initial;
+        /*  可以写几个fill_line  进行到第几部就添加那个class！！！*/
+    }
+    .filling_line5{
+        position: absolute;
+        padding: 0;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 642px;
+        background-color: mediumseagreen;
+        transform-origin: left center;
+        transition-property: transform;
+        transition-duration: 0.3s;
+        transition-timing-function: initial;
+        transition-delay: initial;
+        /*  可以写几个fill_line  进行到第几部就添加那个class！！！*/
+    }
+    .filling_line6{
+        position: absolute;
+        padding: 0;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 922px;
+        background-color: mediumseagreen;
+        transform-origin: left center;
+        transition-property: transform;
+        transition-duration: 0.3s;
+        transition-timing-function: initial;
+        transition-delay: initial;
+        /*  可以写几个fill_line  进行到第几部就添加那个class！！！*/
+    }
+
+    ol {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    li{
+        padding: 0;
+        margin: 0;
+    }
+    #apname::after{
+        content: '';
+        display: inline;
+        line-height: 50px;
+
+
+
+    }
+</style>
+
+<body>
+<ul class="layui-nav" lay-filter="">
+
+    <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
+
+    <li class="layui-nav-item">
+        <a href="{:url('index/signinfo')}">进行中<span class="layui-badge">{$pend}</span></a>
+    </li>
+    <li class="layui-nav-item">
+        <a href="{:url('index/endsigninfo')}">已签核<span class="layui-badge">{$welldone}</span></a>
+    </li>
+
+
+    <ul class="layui-nav layui-layout-right" lay-filter="">
+        <li class="layui-nav-item" >
+            <a href=""><img src="/tp5/public/static/images/tx.jpg" class="layui-nav-img">{$Think.session.username}</a>
+            <dl class="layui-nav-child">
+                <!--<dd><a href="javascript:;">修改信息</a></dd>-->
+                <!--<dd><a href="javascript:;">安全管理</a></dd>-->
+                <dd><a href="{:url('index/login')}">退了</a></dd>
+            </dl>
+        </li>
+    </ul>
+</ul>
+<div style="width: 965px;margin: 120px auto;position: relative">
+
+    <div class="time_line_box">
+        <div style="width: 50px;height: 50px;border-radius: 50%;background-color: red;position: absolute;transform: translateY(50%);left:25px;text-align: center" id="apname">
+        </div>
+        <div class="time_line" style="width:900px;margin-left: 84px">
+            <ol>
+                <li >
+                    <a class="order_item selected" style="margin-left: 60px" >申请单位</a>
+                </li>
+                <li>
+                    <a class="order_item " style="margin-left:190px" >方案计划</a>
+                </li>
+                <li>
+                    <a class="order_item " style="margin-left: 330px">签核</a>
+                </li>
+                <li>
+                    <a class="order_item" style="margin-left: 445px" >正式开发</a>
+                </li>
+                <li>
+                    <a class="order_item" style="margin-left: 590px">测试</a>
+                </li>
+                <li>
+                    <a class="order_item" style="margin-left: 695px">审核/上线</a>
+                </li>
+
+            </ol>
+            <span class="filling_line" style="transform: scaleX(1);"></span>
+        </div>
+    </div>
+
+</div>
+</body>
+<script type="text/javascript">
+    layui.use('element', function(){
+        let element = layui.element;
+        element.init();
+
+
+        //…
+    });
+</script>
+</html>
