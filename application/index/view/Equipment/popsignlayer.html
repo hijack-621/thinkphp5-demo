@@ -214,21 +214,23 @@
     </div>
 </body>
 <script>
-    mui.previewImage();
+   mui.previewImage();
    layui.use(['upload','layer'], function () {
         let upload = layui.upload;
         upload.render({
             elem: '#testList'
-            , url: '{:url("Equipment/upload")}'+'?id='+parent.id+'&sname='+parent.p 
+            , url: '{:url("Equipment/upload")}'+'?id='+parent.id+'&sname='+parent.p+'&step='+parent.step 
             , accept: 'file'
             // , multiple: true //是否允许多文件上传
             , auto: true //是否允许自动上传，否需要配置bindaction参数指定上传按钮来触发上传
             // , bindAction: '#testListAction' //上传按钮 触发
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
+				//console.log(obj);
                 obj.preview(function (index, file, result) {
                     $('#demo1').attr('src', result); //图片链接（base64）
                 });
+				
             },
             choose: function (obj) {   //选择文件后的回调 
                 console.log(obj)

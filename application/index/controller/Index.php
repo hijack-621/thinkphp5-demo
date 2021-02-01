@@ -112,6 +112,10 @@ class Index extends Controller
         return $this->fetch('tnbimagesindex');
     }
 
+    public function carousel(){
+        return $this->fetch('carousel');
+    }
+
 }
 
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>待校验清单</title>
+    <title>已校验清单</title>
     <link rel="icon" href="__PUBLIC__/images/compallogo.png" type="image/x-icon">
     <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
     <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
@@ -45,7 +45,7 @@
     
 
     <div style="width: 1155px;margin-left: 50%;transform: translateX(-50%);margin-top: 100px">
-        <table class="layui-table" lay-data="{width:1150,height:415, url:'/tp5/index/equipment/listdata', page:{limit:30,curr:1}, id:'infotable', skin:'row', even:true} " style="margin-left: auto;margin-right: auto">
+        <table class="layui-table" lay-data="{width:1150,height:415, url:'/tp5/index/equipment/elistdata', page:{limit:30,curr:1}, id:'infotable', skin:'row', even:true} " style="margin-left: auto;margin-right: auto">
             <thead>
             <tr>
                 <th lay-data="{field:'id',hide:true}">ID</th>
@@ -68,7 +68,7 @@
 </body>
 
 <script type="text/html" id="nameTpl">
-     <a href="{:url('equipment/signpage')}?id={{d.id}}" target='_blank' class="layui-table-link" >{{ d.name }}</a>
+     <a href="{:url('equipment/signpage')}?id={{d.id}}" class="layui-table-link" >{{ d.name }}</a>
  </script>
 
  

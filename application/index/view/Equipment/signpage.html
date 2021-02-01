@@ -8,6 +8,10 @@
     <link rel="stylesheet" href='__PUBLIC__/css/bootstrap.min.css'>
     <link rel="stylesheet" href="__PUBLIC__/css/layui.css">
     <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/mui/mui.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/mui/mui.zoom.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/mui/mui.previewimage.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/layui.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/element.js"></script>
@@ -28,7 +32,170 @@
        color:blue;
      
    }
-   [v-cloak] { display: none!important;}
+
+
+   [v-cloak] { display: none!important;;}
+
+   .mui-preview-image.mui-fullscreen {
+				position: fixed;
+				z-index: 20;
+				background-color: #000;
+			}
+			.mui-preview-header,
+			.mui-preview-footer {
+				position: absolute;
+				width: 100%;
+				left: 0;
+				z-index: 10;
+			}
+			.mui-preview-header {
+				height: 44px;
+				top: 0;
+			}
+			.mui-preview-footer {
+				height: 50px;
+				bottom: 0px;
+			}
+			.mui-preview-header .mui-preview-indicator {
+				display: block;
+				line-height: 25px;
+				color: #fff;
+				text-align: center;
+				margin: 15px auto 4;
+				width: 70px;
+				background-color: rgba(0, 0, 0, 0.4);
+				border-radius: 12px;
+				font-size: 16px;
+			}
+			.mui-preview-image {
+				display: none;
+				-webkit-animation-duration: 0.5s;
+				animation-duration: 0.5s;
+				-webkit-animation-fill-mode: both;
+				animation-fill-mode: both;
+			}
+			.mui-preview-image.mui-preview-in {
+				-webkit-animation-name: fadeIn;
+				animation-name: fadeIn;
+			}
+			.mui-preview-image.mui-preview-out {
+				background: none;
+				-webkit-animation-name: fadeOut;
+				animation-name: fadeOut;
+			}
+			.mui-preview-image.mui-preview-out .mui-preview-header,
+			.mui-preview-image.mui-preview-out .mui-preview-footer {
+				display: none;
+			}
+			.mui-zoom-scroller {
+				position: absolute;
+				display: -webkit-box;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				-webkit-backface-visibility: hidden;
+			}
+			.mui-zoom {
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+			}
+			.mui-slider .mui-slider-group .mui-slider-item img {
+				width: auto;
+				height: auto;
+				max-width: 100%;
+				max-height: 100%;
+			}
+			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+				width: 100%;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+				display: inline-table;
+			}
+			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+				display: table-cell;
+				vertical-align: middle;
+			}
+			.mui-preview-loading {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				display: none;
+			}
+			.mui-preview-loading.mui-active {
+				display: block;
+			}
+			.mui-preview-loading .mui-spinner-white {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				margin-left: -25px;
+				margin-top: -25px;
+				height: 50px;
+				width: 50px;
+			}
+			.mui-preview-image img.mui-transitioning {
+				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+				transition: transform 0.5s ease, opacity 0.5s ease;
+			}
+			@-webkit-keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@keyframes fadeIn {
+				0% {
+					opacity: 0;
+				}
+				100% {
+					opacity: 1;
+				}
+			}
+			@-webkit-keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+			@keyframes fadeOut {
+				0% {
+					opacity: 1;
+				}
+				100% {
+					opacity: 0;
+				}
+			}
+
+    .layui-upload-img {
+                width:  62px;
+                height: 62px;
+                margin:5px auto;
+    }
+    .yw{
+        background-color: rgb(247, 243, 22);
+    }
+    .gn{
+        background-color:#00ff00;
+    }
+
 </style>
 <body style="background-color: #ccc;">
     <ul class="layui-nav" lay-filter="">
@@ -36,11 +203,12 @@
         <li class="layui-nav-item "><a href="#" style="font-size: 20px;text-decoration: none">Compal SOD Software Management System</a></li>
     
         <li class="layui-nav-item">
-            <a href="{:url('Equipment/pendlist')}" >未结案清单<span class="layui-badge">{$pcount}</span></a>
+            <a href="{:url('Equipment/pendlist')}" onclick="" >未结案清单<span class="layui-badge">{$pcount}</span></a>
         </li>
         <li class="layui-nav-item">
-            <a href="{:url('Equipment/pendlist')}">已结案清单<span class="layui-badge">{$ocount}</span></a>
+            <a href="{:url('Equipment/endlist')}">已结案清单<span class="layui-badge">{$ocount}</span></a>
         </li>
+    
     
         <ul class="layui-nav layui-layout-right" lay-filter="">
             <li class="layui-nav-item" >
@@ -69,33 +237,35 @@
                 <th>Status</th>
             </tr>
             <tr >
-                <td style='border-right: 0px;' colspan="1">仪器校验流程</td>
+                <td style='border-right: 0px;height:50px' colspan="1">仪器校验流程</td>
             </tr>
             <tr>
                 <td>仪器负责人拿到仪器签字后拍照上传到系统</td>
-                <td></td>
+                <td><img v-cloak v-show="imgs.img1.flag" :src = "imgs.img1.path" class="layui-upload-img" data-preview-src="" data-preview-group="1" id="demo1" /></td>
                 <td v-cloak>{{ arr.itime}}</td>
-                <td v-cloak><a href="javascript:void(0)" @click="poplayer(arr.custodian,arr.id)">{{ arr.custodian}}</a></td>
+                <td v-cloak><a href="javascript:void(0)" @click="poplayer(arr.incharge,arr.id,1)">{{ arr.custodian}}</a></td>
                 <td v-cloak>{{ arr.memo1==''||arr.memo1==null ? '' : arr.memo1}}</td>
-                <td v-cloak>{{ arr.etime==''||arr.etime==null ? '' : arr.etime}}</td>
-                <td v-cloak>{{ arr.step1==0||arr.step1==undefined||arr.step1=='' ? '待签核' : '签核完毕'}}</td>
+                <td v-cloak>{{ arr.etime1==''||arr.etime1==null ? '' : arr.etime1}}</td>
+                <td v-cloak :class="arr.step1==0||arr.step1==undefined||arr.step1=='' ? 'yw' : 'gn'">{{ arr.step1==0||arr.step1==undefined||arr.step1=='' ? '待签核' : '签核完毕'}}</td>
             </tr>
             <tr>
                 <td>校验完毕并且通知保管人取仪器并签字上传系统</td>
-                <td></td>
-                <td v-cloak>{{  arr.itime2==''||arr.itime2==null ? '' : arr.itime2}}</td>
-                <td v-cloak><a href="javascript:void(0)" @click="poplayer(arr.incharge,arr.id)">{{ arr.incharge}}</a></td>
+                <td><img v-cloak v-show="imgs.img2.flag" :src = "imgs.img2.path"  class="layui-upload-img" data-preview-src="" data-preview-group="1" id="demo1" /></td>
+                <td v-cloak>{{  arr.etime1==''||arr.etime1==null ? '' : arr.etime1}}</td>
+                <td v-cloak><a href="javascript:void(0)" @click="poplayer('all',arr.id,2)">{{ arr.incharge}}</a></td>
                 <td v-cloak>{{ arr.memo2==''||arr.memo2==null ? '' : arr.memo2}}</td>
                 <td v-cloak>{{ arr.etime2==''||arr.etime2==null ? '' : arr.etime2}}</td>
-                <td v-cloak>{{ arr.step2==0||arr.step2==undefined||arr.step2=='' ? '待签核' : '签核完毕'}}</td>
+                <td v-cloak :class="arr.step2==0||arr.step2==undefined||arr.step2=='' ? 'yw' : 'gn'" >{{ arr.step2==0||arr.step2==undefined||arr.step2=='' ? '待签核' : '签核完毕'}}</td>
             </tr>
             </tbody>
             </table>
     </div>
 
 </body>
-<script>
+<script type="text/javascript">
     Vue.config.devtools = true;
+    mui.previewImage();
+    
     layui.use('element', function(){
         let element = layui.element;
         element.init();
@@ -125,15 +295,22 @@
     })
     
 
-    
-
     let vm = new Vue({
         el:'#app',
         data:{
             arr:{},
+            imgs:{
+                'img1':{path:'',flag:false},
+                'img2':{path:'',flag:false}
+            },
+           
         },
         created() {
             this.getinfo()
+            this.getimgs()
+            // mui('body').on( 'tap' , 'a' , function(){ //mui.previewImage(); 使用mui的图片预览后，页面的a链接会失效，加上这段代码可以恢复跳转！！！
+            //     document.location.href=this.href;
+            // })
         },
         // watch:{
         //     'arr':function(newval,oldval){
@@ -154,9 +331,11 @@
                        }
                     })
             },
-            poplayer(e,f){
+            poplayer(e,f,g){
+                let self = this;
                 window.p = e;
                 window.id = f;
+                window.step = g;
                 layui.use('layer', function(){
                     let layer = layui.layer
                     layer.ready(function () {
@@ -170,12 +349,64 @@
                             btn: ['確定', '关闭'],
                             yes: function (index,layero) {
                                 
-                                let body = layer.getChildFrame('body',index)
-                                let t  =body.find('textarea').val() //memo val
-                                let src = '/tp5/public/static/'+'/epimgs'+'/'+f+'/'+e+'.jpg'
-                               // window.
-                                //console.log(src)
+                                let body = layer.getChildFrame('body', index)
+                                let t = body.find('textarea').val() //memo val
 
+                                if (t !== '') {
+                                    axios({
+                                        headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+                                        method: 'post',
+                                        url: '{:url("Equipment/update_ep")}',
+                                        params: { id:f, memo:t, step:g , rec:e },
+                                    }).then(res=>{
+                                        console.log(res);
+                                        // if(res.status==200 ){
+                                        //     layer.msg('签核ok',{time:1500,icon:1},function(){
+                                        //         layer.close(index);
+                                        //     })
+                                        // }
+                                    })
+
+
+                                // let a =  axios({
+                                //         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+                                //         method: 'post',
+                                //         url: '{:url("Equipment/update_ep")}',
+                                //         params: { id:f, memo:t, step:g },
+                                //     });
+                                // let b =  axios({
+                                //         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+                                //         method: 'post',
+                                //         url: '{:url("Equipment/getImgpathById")}',
+                                //         params: { id:f},
+                                //     });
+                                    // axios.all([a, b]).then(axios.spread( (res1, res2)=>{
+                                    //     //console.log(self.imgs);
+                                    //     //console.log(self.arr);
+                                    //    if(res1.status==200&&res2.status==200 ){
+                                    //        let obj =res2.data[0];
+                                    //        let keys = Object.keys(obj);
+                                    //        for(let i=0; i<keys.length;i++){
+                                    //         if(obj[keys[i]]!==null&&obj[keys[i]]!==''){
+                                    //             let kimg = 'img'+parseInt(i+1);
+                                               
+                                    //             (self.imgs)[kimg].path = obj[keys[i]];
+                                    //             (self.imgs)[kimg].flag = true;
+                                    //         }
+                                            
+                                    //        }
+                                    //        layer.close(index)
+
+                                    //    }else{
+                                    //     console.log('err');
+                                    //     layer.close(index)
+                                    //    }
+                                        
+                                    // } ))
+                                        return false;
+                                }
+
+                             
                             }
 
 
@@ -184,10 +415,34 @@
                     })
                     
                 })
+            },
+            async getimgs(){
+                await  axios({
+                    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                    method:'post',
+                    url:'{:url("Equipment/getImgpathById")}',
+                    params:{id:urlparam[1]},
+                }).then(res=>{ //这里必须用箭头函数 
+                        if (res.status == 200) {
+                        if ((typeof res.data) !== 'string') {
+                            let obj = res.data[0];
+                            //console.log(typeof res.data)
+                            let keys = Object.keys(obj);
+                            for (let i = 0; i < keys.length; i++) {
+                                if (obj[keys[i]] !== null && obj[keys[i]] !== '') {
+                                    let kimg = 'img' + parseInt(i + 1);
+                                    (this.imgs)[kimg].path = obj[keys[i]];
+                                    (this.imgs)[kimg].flag = true;
+                                }
+                            }
+                        }
+                    }
+                    })
             }
         },
 
     })
     
+   
 </script>
 </html>
