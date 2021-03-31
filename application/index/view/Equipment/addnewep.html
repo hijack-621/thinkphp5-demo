@@ -92,17 +92,17 @@
         let    form = layui.form;
         let    layer = layui.layer;
         
-        table.render({
+        table.render({   //渲染表格 文档:https://www.layui.com/doc/modules/table.html
             elem:'#tableid',
-            id:'tableid',
-            url: '{:url("Equipment/tabledata")}',
+            id:'tableid',// table id 属性 
+            url: '{:url("Equipment/tabledata")}', //对应：D:\phpstudy\WWW\tp5\application\index\controller\Equipment.php 中的 tabledata 函数
             toolbar: '#toolbarDemo',
-            defaultToolbar: ['filter', 'exports', 'print', {
+            defaultToolbar: ['filter', 'exports', 'print', { //layui  默认工具栏
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
-            cols: [[
+            cols: [[ //表格字段
                 {type: "checkbox", width: 50},
                 {field: 'id', width: 55, title: 'ID',hide:true,},
                 {field: 'yiqimingcheng', width: 135, title: '儀器名稱',edit:'text' },
@@ -143,11 +143,11 @@
            /**
          * toolbar监听事件
          */
-         table.on('toolbar(tableid)', function (obj) {
-            if (obj.event === 'add') {  // 监听添加操作
+         table.on('toolbar(tableid)', function (obj) { 
+            if (obj.event === 'add') {  // 监听添加操作  add按钮点击事件
                 layer.open({
-                    title: '设备添加',
-                    type: 2,
+                    title: '设备添加', //layui 弹出层
+                    type: 2,          // https://www.layui.com/doc/modules/layer.html
                     shade: 0.2,
                     maxmin:true,
                     shadeClose: true,
@@ -155,20 +155,20 @@
                     content: './add.html',
                     btn: ['保存','关闭'],      
                     yes:function (index) {
-                        let res = window["layui-layer-iframe" + index].callbackdata();
+                        let res = window["layui-layer-iframe" + index].callbackdata();//接收到 弹出层返回的函数值
                          console.log(res);
                         
                         if(res) {
                             $.ajax({
 
-                                url:'{:url("Equipment/addnew")}',
+                                url:'{:url("Equipment/addnew")}', //对应：D:\phpstudy\WWW\tp5\application\index\controller\Equipment.php 中的 addnew 函数
                                 dataType:'json',
                                 data:{data:res},
                                 type:'post',
                                 success:function (msg) {
                                     console.log(msg);
                                     if(msg>=1){
-                                        layer.msg('添加成功',{icon:6,shade:0.4},function () {
+                                        layer.msg('添加成功',{icon:6,shade:0.4},function () { //添加成功提示
                                             window.location.reload();
                                         })
                                     }

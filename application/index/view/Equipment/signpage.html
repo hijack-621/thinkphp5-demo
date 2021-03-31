@@ -295,7 +295,7 @@
     })
     
 
-    let vm = new Vue({
+    let vm = new Vue({ //vue.js 文档：https://cn.vuejs.org/v2/guide/
         el:'#app',
         data:{
             arr:{},
@@ -317,7 +317,7 @@
                 
         //     }
         // },
-        methods:{
+        methods:{ //定义的函数都放在methods 中
             async  getinfo(){
                 await  axios({
                     headers: {'Content-Type': 'application/json;charset=UTF-8'},
@@ -366,43 +366,6 @@
                                         //     })
                                         // }
                                     })
-
-
-                                // let a =  axios({
-                                //         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-                                //         method: 'post',
-                                //         url: '{:url("Equipment/update_ep")}',
-                                //         params: { id:f, memo:t, step:g },
-                                //     });
-                                // let b =  axios({
-                                //         headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-                                //         method: 'post',
-                                //         url: '{:url("Equipment/getImgpathById")}',
-                                //         params: { id:f},
-                                //     });
-                                    // axios.all([a, b]).then(axios.spread( (res1, res2)=>{
-                                    //     //console.log(self.imgs);
-                                    //     //console.log(self.arr);
-                                    //    if(res1.status==200&&res2.status==200 ){
-                                    //        let obj =res2.data[0];
-                                    //        let keys = Object.keys(obj);
-                                    //        for(let i=0; i<keys.length;i++){
-                                    //         if(obj[keys[i]]!==null&&obj[keys[i]]!==''){
-                                    //             let kimg = 'img'+parseInt(i+1);
-                                               
-                                    //             (self.imgs)[kimg].path = obj[keys[i]];
-                                    //             (self.imgs)[kimg].flag = true;
-                                    //         }
-                                            
-                                    //        }
-                                    //        layer.close(index)
-
-                                    //    }else{
-                                    //     console.log('err');
-                                    //     layer.close(index)
-                                    //    }
-                                        
-                                    // } ))
                                         return false;
                                 }
 
@@ -429,7 +392,7 @@
                             //console.log(typeof res.data)
                             let keys = Object.keys(obj);
                             for (let i = 0; i < keys.length; i++) {
-                                if (obj[keys[i]] !== null && obj[keys[i]] !== '') {
+                                if (obj[keys[i]] !== null && obj[keys[i]] !== '') { //如果这步已经签过，那就将图片展示在table中
                                     let kimg = 'img' + parseInt(i + 1);
                                     (this.imgs)[kimg].path = obj[keys[i]];
                                     (this.imgs)[kimg].flag = true;
